@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Alchemist — AI for Humans</title>
+  <meta name="description" content="AI Alchemist — practical AI tools, games, and resources for humans. By Siobhan Kosho-Hodge." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:      #0D1B2A;
+      --navy-mid:  #152232;
+      --navy-card: #1A2D40;
+      --teal:      #5BC8C0;
+      --teal-dark: #3A9E97;
+      --teal-glow: rgba(91, 200, 192, 0.15);
+      --white:     #F0FAFA;
+      --muted:     #8BB8C0;
+      --border:    rgba(91, 200, 192, 0.2);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'Space Grotesk', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2.5rem;
+      background: rgba(13, 27, 42, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--teal);
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted); font-size: 0.9rem; text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--teal); }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 7rem 2rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 60%, rgba(91, 200, 192, 0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 20%, rgba(91, 200, 192, 0.05) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    /* subtle grid */
+    .hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 80%);
+      pointer-events: none; opacity: 0.4;
+    }
+    .hero-logo {
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      box-shadow: 0 0 40px rgba(91,200,192,0.2), 0 0 80px rgba(91,200,192,0.07);
+      margin-bottom: 2rem;
+      object-fit: cover;
+      position: relative; z-index: 1;
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    .hero-logo:hover {
+      box-shadow: 0 0 60px rgba(91,200,192,0.35), 0 0 100px rgba(91,200,192,0.12);
+      transform: scale(1.03);
+    }
+    /* Fallback if logo.png not added yet */
+    .hero-logo-fallback {
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      border: 2px solid var(--teal);
+      box-shadow: 0 0 40px rgba(91,200,192,0.2);
+      margin-bottom: 2rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem;
+      background: var(--navy-card);
+      position: relative; z-index: 1;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: var(--teal-glow);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.35rem 1rem;
+      font-size: 0.78rem;
+      color: var(--teal);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      position: relative; z-index: 1;
+    }
+    .hero-badge::before { content: '✦'; font-size: 0.65rem; }
+    h1 {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      position: relative; z-index: 1;
+      margin-bottom: 0.4rem;
+    }
+    h1 span { color: var(--teal); }
+    .hero-tagline {
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+      position: relative; z-index: 1;
+    }
+    .hero-tagline em {
+      color: var(--teal);
+      font-style: normal;
+      font-weight: 500;
+    }
+    .hero-cta {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      justify-content: center;
+      position: relative; z-index: 1;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.8rem 2rem;
+      border-radius: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--teal);
+      color: var(--navy);
+      border: 2px solid var(--teal);
+    }
+    .btn-primary:hover {
+      background: var(--teal-dark);
+      border-color: var(--teal-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(91,200,192,0.25);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--teal);
+      border: 2px solid var(--border);
+    }
+    .btn-secondary:hover {
+      border-color: var(--teal);
+      background: var(--teal-glow);
+      transform: translateY(-2px);
+    }
+    .scroll-hint {
+      position: absolute; bottom: 2rem;
+      left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center;
+      gap: 0.4rem;
+      color: var(--muted); font-size: 0.75rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      z-index: 1;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+    .scroll-hint svg { opacity: 0.5; }
+
+    /* ─── SECTION SHARED ─── */
+    section { width: 100%; }
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 6rem 2rem;
+    }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: var(--teal);
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+    }
+    .section-label::before { content: ''; display: block; width: 24px; height: 2px; background: var(--teal); border-radius: 2px; }
+    h2 {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .section-sub {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 540px;
+      margin-bottom: 3.5rem;
+    }
+
+    /* ─── PROJECTS ─── */
+    #projects { background: var(--navy-mid); }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: var(--navy-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex; flex-direction: column;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--teal), var(--teal-dark));
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(91,200,192,0.45);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.3), 0 0 30px rgba(91,200,192,0.08);
+    }
+    .project-card:hover::before { opacity: 1; }
+    .project-icon {
+      font-size: 2.4rem;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+    .project-tag {
+      display: inline-block;
+      background: var(--teal-glow);
+      border: 1px solid var(--border);
+      color: var(--teal);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.7rem;
+      border-radius: 999px;
+      margin-bottom: 0.8rem;
+      font-weight: 600;
+    }
+    .project-card h3 {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      color: var(--white);
+    }
+    .project-card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      flex: 1;
+      margin-bottom: 1.5rem;
+    }
+    .project-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      color: var(--teal);
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: gap 0.2s;
+    }
+    .project-card:hover .project-link { gap: 0.7rem; }
+    .project-link svg { transition: transform 0.2s; }
+    .project-card:hover .project-link svg { transform: translateX(3px); }
+
+    /* ─── ABOUT ─── */
+    #about { background: var(--navy); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    @media (max-width: 700px) { .about-grid { grid-template-columns: 1fr; gap: 2rem; } }
+    .about-text h2 { margin-bottom: 1.2rem; }
+    .about-text p { color: var(--muted); font-size: 1rem; margin-bottom: 1rem; }
+    .about-text p strong { color: var(--white); }
+    .about-stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    }
+    .stat-box {
+      background: var(--navy-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.4rem;
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--teal);
+      display: block;
+    }
+    .stat-label { font-size: 0.82rem; color: var(--muted); margin-top: 0.2rem; }
+
+    /* ─── SOCIAL ─── */
+    #social { background: var(--navy-mid); }
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .social-card {
+      display: flex; align-items: center; gap: 1rem;
+      background: var(--navy-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.2rem 1.5rem;
+      text-decoration: none;
+      color: var(--white);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+    .social-card:hover {
+      border-color: var(--teal);
+      background: var(--teal-glow);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+    .social-icon {
+      width: 40px; height: 40px;
+      border-radius: 8px;
+      background: var(--teal-glow);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .social-handle { font-size: 0.78rem; color: var(--muted); margin-top: 0.1rem; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--navy);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+    footer p { color: var(--muted); font-size: 0.85rem; }
+    footer strong { color: var(--teal); }
+    footer a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    footer a:hover { color: var(--teal); }
+
+    /* ─── RESPONSIVE NAV ─── */
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      nav { padding: 1rem 1.5rem; }
+      .section-inner { padding: 4rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-brand" href="#">AI ALCHEMIST</a>
+    <ul class="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#social">Connect</a></li>
+      <li><a href="https://github.com/siobhankoshodge" target="_blank" rel="noopener">GitHub ↗</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <img
+      src="logo.png"
+      alt="AI Alchemist Logo"
+      class="hero-logo"
+      onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex';"
+    />
+    <div id="logo-fallback" class="hero-logo-fallback" style="display:none;">⚗️</div>
+
+    <div class="hero-badge">AI for Humans</div>
+
+    <h1>AI <span>Alchemist</span></h1>
+    <p class="hero-tagline">
+      Turning <em>complex AI</em> into tools that actually work for you.
+    </p>
+
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">
+        Explore Projects
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="https://github.com/siobhankoshodge" target="_blank" rel="noopener" class="btn btn-secondary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        GitHub
+      </a>
+    </div>
+
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-inner">
+      <div class="section-label">What I'm Building</div>
+      <h2>Projects &amp; Experiments</h2>
+      <p class="section-sub">From vibe-coded games to AI automation workflows — everything lives here.</p>
+
+      <div class="projects-grid">
+
+        <a href="https://siobhankoshodge.github.io/games/" target="_blank" rel="noopener" class="project-card">
+          <span class="project-icon">🎮</span>
+          <span class="project-tag">Games</span>
+          <h3>Vibe Coding Experiments</h3>
+          <p>Games and interactive experiments built with a mix of creativity and AI assistance. What happens when you just… go for it?</p>
+          <span class="project-link">
+            Play Now
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </a>
+
+        <a href="https://siobhankoshodge.github.io/resources/" target="_blank" rel="noopener" class="project-card">
+          <span class="project-icon">⚗️</span>
+          <span class="project-tag">Resources</span>
+          <h3>Automation Playbook</h3>
+          <p>Step-by-step AI automation instructions for real people. No jargon, no fluff — just practical workflows you can actually use.</p>
+          <span class="project-link">
+            Explore
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </a>
+
+        <a href="https://siobhankoshodge.github.io/galaxygirls/" target="_blank" rel="noopener" class="project-card">
+          <span class="project-icon">🌌</span>
+          <span class="project-tag">New</span>
+          <h3>Galaxy Girls</h3>
+          <p>The newest experiment on the block — still in orbit. Watch this space.</p>
+          <span class="project-link">
+            Check it out
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </a>
+
+        <a href="https://siobhankoshodge.github.io/pod-automation-website/" target="_blank" rel="noopener" class="project-card">
+          <span class="project-icon">🤖</span>
+          <span class="project-tag">Automation</span>
+          <h3>POD Automation</h3>
+          <p>Print-on-Demand TikTok Automation System — because your content shouldn't have to wait for you.</p>
+          <span class="project-link">
+            View Project
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div class="about-text">
+          <div class="section-label">About</div>
+          <h2>The Alchemist Behind the Curtain</h2>
+          <p>Hi, I'm <strong>Siobhan</strong>. I believe AI should work <strong>for</strong> humans — not the other way around.</p>
+          <p>I build tools, write playbooks, and run experiments that show non-technical people how to actually use AI in their everyday lives and businesses.</p>
+          <p>No PhD required. Just curiosity and a willingness to try things.</p>
+          <div style="margin-top: 2rem;">
+            <a href="https://github.com/siobhankoshodge" target="_blank" rel="noopener" class="btn btn-secondary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+              All Repositories
+            </a>
+          </div>
+        </div>
+        <div class="about-stats">
+          <div class="stat-box">
+            <span class="stat-num">10+</span>
+            <div class="stat-label">Public Repos</div>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num">∞</span>
+            <div class="stat-label">Experiments</div>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num">0</span>
+            <div class="stat-label">Jargon Used</div>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num">100%</span>
+            <div class="stat-label">For Humans</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL / CONNECT -->
+  <section id="social">
+    <div class="section-inner">
+      <div class="section-label">Connect</div>
+      <h2>Find Me Online</h2>
+      <p class="section-sub">Come say hi — I talk about AI, automation, and making tech less terrifying.</p>
+
+      <div class="social-grid">
+        <a href="https://www.tiktok.com/@aialchemist19" target="_blank" rel="noopener" class="social-card">
+          <div class="social-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--teal)"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.21 8.21 0 004.79 1.53V6.84a4.85 4.85 0 01-1.02-.15z"/></svg>
+          </div>
+          <div>
+            <div>TikTok</div>
+            <div class="social-handle">@aialchemist19</div>
+          </div>
+        </a>
+
+        <a href="https://www.youtube.com/@AIAlchemist-19" target="_blank" rel="noopener" class="social-card">
+          <div class="social-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--teal)"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </div>
+          <div>
+            <div>YouTube</div>
+            <div class="social-handle">@AIAlchemist-19</div>
+          </div>
+        </a>
+
+        <a href="https://www.instagram.com/aialchemist19/" target="_blank" rel="noopener" class="social-card">
+          <div class="social-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--teal)"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </div>
+          <div>
+            <div>Instagram</div>
+            <div class="social-handle">@aialchemist19</div>
+          </div>
+        </a>
+
+        <a href="https://www.linkedin.com/company/ai-alchemist-19/" target="_blank" rel="noopener" class="social-card">
+          <div class="social-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--teal)"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </div>
+          <div>
+            <div>LinkedIn</div>
+            <div class="social-handle">AI Alchemist</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>
+      Built with curiosity &amp; a bit of AI magic ·
+      <strong>AI Alchemist</strong> ·
+      <a href="https://github.com/siobhankoshodge" target="_blank" rel="noopener">@siobhankoshodge</a>
+    </p>
+  </footer>
+
+</body>
+</html>
