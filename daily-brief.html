@@ -156,6 +156,20 @@
     font-family: monospace;
   }
 
+  .platforms-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    width: 100%;
+  }
+  @media (max-width: 600px) {
+    .platforms-row { grid-template-columns: 1fr; }
+  }
+  .step.linkedin   { border-color: #0077b5; background: #0d1f2e; }
+  .step.linkedin .step-tag { color: #4a9eca; }
+  .step.linkedin .detail-item { border-color: #0077b5; background: rgba(0,119,181,0.06); }
+  .icon.blue   { background: #004d7a; }
+
   footer {
     text-align: center;
     margin-top: 48px;
@@ -289,38 +303,58 @@
       <div class="icon teal">📤</div>
       <div>
         <div class="step-title">Buffer</div>
-        <div class="step-tag">Posts immediately to TikTok</div>
+        <div class="step-tag">Posts simultaneously to TikTok &amp; LinkedIn</div>
       </div>
     </div>
     <div class="details">
       <div class="detail-item">
         <strong>Image</strong>
-        Web Content Link from module 10 → posted as TikTok image
+        Web Content Link from module 10 → posted as image to both channels
       </div>
       <div class="detail-item">
         <strong>Caption</strong>
-        Data from module 12 → TikTok caption + hashtags
+        Data from module 12 → caption + hashtags posted to both channels at the same time
       </div>
     </div>
   </div>
 
   <div class="arrow-wrap"><div class="arrow"><span class="arrow-label">published to</span></div></div>
 
-  <!-- STEP 6: TikTok -->
-  <div class="step tiktok">
-    <div class="step-header">
-      <div class="icon red">🎵</div>
-      <div>
-        <div class="step-title">TikTok</div>
-        <div class="step-tag">Live Post · AI Alchemist Account</div>
+  <!-- STEP 6: TikTok + LinkedIn -->
+  <div class="platforms-row">
+
+    <div class="step tiktok">
+      <div class="step-header">
+        <div class="icon red">🎵</div>
+        <div>
+          <div class="step-title">TikTok</div>
+          <div class="step-tag">Live Post · AI Alchemist Account</div>
+        </div>
+      </div>
+      <div class="details single">
+        <div class="detail-item">
+          <strong>Result</strong>
+          Daily AI brief live on TikTok — infographic image + branded caption
+        </div>
       </div>
     </div>
-    <div class="details single">
-      <div class="detail-item">
-        <strong>Result</strong>
-        Daily AI brief is live on TikTok with infographic image and branded caption — fully automated, no manual steps required
+
+    <div class="step linkedin">
+      <div class="step-header">
+        <div class="icon blue">💼</div>
+        <div>
+          <div class="step-title">LinkedIn</div>
+          <div class="step-tag">Live Post · AI Alchemist Page</div>
+        </div>
+      </div>
+      <div class="details single">
+        <div class="detail-item">
+          <strong>Result</strong>
+          Daily AI brief live on LinkedIn — same infographic + caption posted simultaneously
+        </div>
       </div>
     </div>
+
   </div>
 
 
