@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Alchemist Daily Brief — Process Flow</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #0f1a2e;
+    color: #fff;
+    padding: 40px 20px;
+    min-height: 100vh;
+  }
+  h1 {
+    text-align: center;
+    font-size: 28px;
+    color: #4BA098;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .subtitle {
+    text-align: center;
+    color: #7ab8b4;
+    font-size: 14px;
+    margin-bottom: 48px;
+    letter-spacing: 1px;
+  }
+  .flow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+  .step {
+    width: 100%;
+    background: #1A2744;
+    border: 2px solid #4BA098;
+    border-radius: 14px;
+    padding: 22px 28px;
+    position: relative;
+  }
+  .step.trigger  { border-color: #4BA098; background: #162236; }
+  .step.script   { border-color: #4BA098; background: #1A2744; }
+  .step.drive    { border-color: #2D7873; background: #162236; }
+  .step.make     { border-color: #2D7873; background: #1A2744; }
+  .step.buffer   { border-color: #4BA098; background: #162236; }
+  .step.tiktok   { border-color: #e85d5d; background: #1a1a2e; }
+  .step.manual   { border-color: #f0a500; background: #1a1a2e; border-style: dashed; }
+
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+  }
+  .icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .icon.teal   { background: #2D7873; }
+  .icon.navy   { background: #243660; }
+  .icon.red    { background: #8b1a1a; }
+  .icon.gold   { background: #7a5200; }
+
+  .step-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .step-tag {
+    font-size: 11px;
+    color: #4BA098;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 2px;
+  }
+  .step.manual .step-tag { color: #f0a500; }
+  .step.tiktok .step-tag { color: #e85d5d; }
+
+  .details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .details.single { grid-template-columns: 1fr; }
+  .detail-item {
+    background: rgba(75,160,152,0.08);
+    border-left: 3px solid #2D7873;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: #b0cec9;
+    line-height: 1.5;
+  }
+  .detail-item strong { color: #7ab8b4; font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 2px; }
+  .step.manual .detail-item { border-color: #f0a500; background: rgba(240,165,0,0.06); }
+  .step.tiktok .detail-item { border-color: #e85d5d; background: rgba(232,93,93,0.06); }
+
+  .arrow {
+    width: 2px;
+    height: 36px;
+    background: linear-gradient(to bottom, #4BA098, #2D7873);
+    position: relative;
+    margin: 0 auto;
+  }
+  .arrow::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 10px solid #2D7873;
+  }
+  .arrow-label {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 11px;
+    color: #4BA098;
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+  }
+  .arrow-wrap {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .files-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .file-badge {
+    background: rgba(75,160,152,0.15);
+    border: 1px solid #2D7873;
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 12px;
+    color: #7ab8b4;
+    font-family: monospace;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 48px;
+    color: #2D7873;
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+  .logo-text {
+    font-size: 18px;
+    font-weight: 700;
+    color: #4BA098;
+    letter-spacing: 3px;
+    margin-bottom: 4px;
+  }
+</style>
+</head>
+<body>
+
+<h1>AI Alchemist Daily Brief</h1>
+<p class="subtitle">Automated Content Pipeline · Process Flow</p>
+
+<div class="flow">
+
+  <!-- STEP 1: Trigger -->
+  <div class="step trigger">
+    <div class="step-header">
+      <div class="icon teal">⏰</div>
+      <div>
+        <div class="step-title">Windows Task Scheduler</div>
+        <div class="step-tag">Trigger · Daily 6:00 AM</div>
+      </div>
+    </div>
+    <div class="details single">
+      <div class="detail-item">
+        <strong>Action</strong>
+        Runs <code>ai_daily_brief.py</code> automatically each morning whether laptop is open or not (as long as it's on)
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow-wrap"><div class="arrow"><span class="arrow-label">executes</span></div></div>
+
+  <!-- STEP 2: Python Script -->
+  <div class="step script">
+    <div class="step-header">
+      <div class="icon navy">🐍</div>
+      <div>
+        <div class="step-title">Python Script</div>
+        <div class="step-tag">ai_daily_brief.py · ~50 seconds</div>
+      </div>
+    </div>
+    <div class="details">
+      <div class="detail-item">
+        <strong>1 · News Search</strong>
+        Gemini 2.5 Flash + Google Search grounding finds top 3 AI stories from the last 24hrs (excludes chip/hardware news)
+      </div>
+      <div class="detail-item">
+        <strong>2 · Background Image</strong>
+        nano-banana-pro-preview generates a unique AI Alchemist branded background — circuit boards, neural networks, mortar &amp; pestle motifs
+      </div>
+      <div class="detail-item">
+        <strong>3 · Infographic</strong>
+        Pillow composites the background + 3 story cards (dark navy glass, teal accents) into a 1080×1080 PNG
+      </div>
+      <div class="detail-item">
+        <strong>4 · TikTok Caption</strong>
+        Gemini 2.5 Flash writes a branded caption in the AI Alchemist voice — punchy hook, hashtags, CTA
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow-wrap"><div class="arrow"><span class="arrow-label">saves to</span></div></div>
+
+  <!-- STEP 3: Google Drive -->
+  <div class="step drive">
+    <div class="step-header">
+      <div class="icon teal">☁️</div>
+      <div>
+        <div class="step-title">Google Drive</div>
+        <div class="step-tag">G:\My Drive\AI Alchemist\Daily Brief</div>
+      </div>
+    </div>
+    <div class="details single">
+      <div class="detail-item">
+        <strong>Output Files</strong>
+        Two files saved with today's date stamp — folder is public so Make.com can access the image URL
+      </div>
+    </div>
+    <div class="files-row">
+      <span class="file-badge">ai_daily_brief_YYYY-MM-DD.png</span>
+      <span class="file-badge">ai_daily_brief_YYYY-MM-DD.txt</span>
+    </div>
+  </div>
+
+  <div class="arrow-wrap"><div class="arrow"><span class="arrow-label">triggers</span></div></div>
+
+  <!-- STEP 4: Make.com -->
+  <div class="step make">
+    <div class="step-header">
+      <div class="icon navy">⚙️</div>
+      <div>
+        <div class="step-title">Make.com Automation</div>
+        <div class="step-tag">Polls every 15 minutes · 4 modules</div>
+      </div>
+    </div>
+    <div class="details">
+      <div class="detail-item">
+        <strong>Module 1 · Watch Folder</strong>
+        Detects new PNG file in the Daily Brief folder on Google Drive
+      </div>
+      <div class="detail-item">
+        <strong>Module 10 · Download PNG</strong>
+        Downloads the infographic — gets the Web Content Link for image URL
+      </div>
+      <div class="detail-item">
+        <strong>Module 11 · Search for TXT</strong>
+        Finds the matching caption file by today's date slug
+      </div>
+      <div class="detail-item">
+        <strong>Module 12 · Download TXT</strong>
+        Retrieves caption text content to pass to Buffer
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow-wrap"><div class="arrow"><span class="arrow-label">sends to</span></div></div>
+
+  <!-- STEP 5: Buffer -->
+  <div class="step buffer">
+    <div class="step-header">
+      <div class="icon teal">📤</div>
+      <div>
+        <div class="step-title">Buffer</div>
+        <div class="step-tag">Posts immediately to TikTok</div>
+      </div>
+    </div>
+    <div class="details">
+      <div class="detail-item">
+        <strong>Image</strong>
+        Web Content Link from module 10 → posted as TikTok image
+      </div>
+      <div class="detail-item">
+        <strong>Caption</strong>
+        Data from module 12 → TikTok caption + hashtags
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow-wrap"><div class="arrow"><span class="arrow-label">published to</span></div></div>
+
+  <!-- STEP 6: TikTok -->
+  <div class="step tiktok">
+    <div class="step-header">
+      <div class="icon red">🎵</div>
+      <div>
+        <div class="step-title">TikTok</div>
+        <div class="step-tag">Live Post · AI Alchemist Account</div>
+      </div>
+    </div>
+    <div class="details single">
+      <div class="detail-item">
+        <strong>Result</strong>
+        Daily AI brief is live on TikTok with infographic image and branded caption — fully automated, no manual steps required
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+<footer>
+  <div class="logo-text">AI ALCHEMIST</div>
+  Automated Daily Brief Pipeline
+</footer>
+
+</body>
+</html>
