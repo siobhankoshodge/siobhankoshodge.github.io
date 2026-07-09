@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI & Automation — Real-Life Applications · AI Alchemist</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚗️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1A2744; --navy2:#141F35; --card:#223354; --card2:#2A3D63;
+  --teal:#4BA098; --dteal:#2D7873; --body:#D9E2EF; --muted:#8FA3C0; --white:#FFFFFF;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden;background:var(--navy);color:var(--body);
+  font-family:'Poppins',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+/* ---------- App chrome ---------- */
+#bar{position:fixed;top:0;left:0;right:0;height:56px;display:flex;align-items:center;gap:14px;
+  padding:0 18px;background:rgba(20,31,53,.85);backdrop-filter:blur(12px);z-index:50;
+  border-bottom:1px solid rgba(75,160,152,.25)}
+#brand{font-weight:700;font-size:12px;letter-spacing:3px;color:var(--teal);white-space:nowrap}
+#secLabel{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;text-align:center}
+#counter{font-size:12px;color:var(--muted);white-space:nowrap}
+#menuBtn,#gridBtn{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;
+  background:var(--card);color:var(--teal);font-size:16px;transition:.2s}
+#menuBtn:hover,#gridBtn:hover{background:var(--card2)}
+#prog{position:fixed;top:56px;left:0;height:3px;background:var(--teal);width:0;z-index:50;transition:width .35s ease;border-radius:0 3px 3px 0}
+
+/* ---------- Stage ---------- */
+#stage{position:absolute;inset:0;padding-top:56px}
+.screen{position:absolute;inset:56px 0 0 0;display:flex;flex-direction:column;
+  padding:28px clamp(16px,5vw,72px) 64px;opacity:0;visibility:hidden;
+  transform:translateX(48px);transition:opacity .38s ease,transform .38s ease,visibility .38s;overflow-y:auto}
+.screen.active{opacity:1;visibility:visible;transform:none;z-index:2}
+.screen.before{transform:translateX(-48px)}
+.inner{width:100%;max-width:980px;margin:auto}
+
+/* reveals */
+.rv{opacity:0;transform:translateY(16px);transition:opacity .4s ease,transform .4s ease}
+.rv.on{opacity:1;transform:none}
+
+/* ---------- Type & bits ---------- */
+.pill{display:inline-block;background:var(--teal);color:var(--navy);font-weight:700;font-size:11px;
+  letter-spacing:2.5px;padding:7px 16px;border-radius:999px;text-transform:uppercase}
+.pill.dark{background:var(--dteal);color:var(--white)}
+h1{color:var(--white);font-weight:800;font-size:clamp(30px,5.4vw,58px);line-height:1.08;letter-spacing:-.5px}
+h2{color:var(--white);font-weight:700;font-size:clamp(23px,3.4vw,36px);line-height:1.15;margin:14px 0 6px}
+.kicker{margin-bottom:4px}
+.sub{color:var(--teal);font-weight:500;font-size:clamp(14px,1.7vw,18px);margin-top:10px}
+.foot{color:var(--teal);font-style:italic;font-size:clamp(13px,1.5vw,16px);text-align:center;margin-top:26px;font-weight:500}
+.foot.muted{color:var(--muted)}
+.dots{display:flex;gap:10px;justify-content:center;margin:22px 0}
+.dots i{width:8px;height:8px;border-radius:50%;background:var(--teal);display:block}
+.center{text-align:center}
+
+/* cards */
+.grid{display:grid;gap:16px;margin-top:26px}
+.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--card);border-radius:16px;padding:20px;box-shadow:0 8px 24px rgba(0,0,0,.28);
+  border:1px solid rgba(75,160,152,.12)}
+.card .ic{width:42px;height:42px;border-radius:50%;background:var(--card2);display:grid;place-items:center;
+  font-size:19px;margin-bottom:12px}
+.card h3{color:var(--white);font-size:15.5px;font-weight:600;margin-bottom:6px}
+.card p{font-size:13.5px;line-height:1.5;font-weight:400}
+.rows{display:flex;flex-direction:column;gap:14px;margin-top:26px}
+.row{display:flex;gap:16px;align-items:flex-start;background:var(--card);border-radius:14px;padding:14px 18px;
+  border:1px solid rgba(75,160,152,.12)}
+.row .ic{flex:0 0 40px;height:40px;border-radius:50%;background:var(--card2);display:grid;place-items:center;font-size:18px}
+.row b{color:var(--white);font-weight:600}
+.row p{font-size:14px;line-height:1.5;margin-top:2px}
+.chip{background:var(--navy2);border:1px solid var(--dteal);border-radius:12px;padding:13px 18px;
+  color:var(--teal);font-style:italic;font-size:14.5px;line-height:1.5}
+.chips{display:flex;flex-direction:column;gap:12px;margin-top:24px}
+.lbl{color:var(--teal);font-weight:600;font-size:14px;margin:20px 0 8px}
+ul.tick{list-style:none;margin-top:8px}
+ul.tick li{padding:5px 0 5px 26px;position:relative;font-size:14px;line-height:1.45}
+ul.tick li::before{content:'✓';position:absolute;left:2px;color:var(--teal);font-weight:700}
+ul.tick.x li::before{content:'—';color:var(--muted)}
+
+/* two col */
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:26px}
+.panel{background:var(--card);border-radius:16px;padding:22px;border:1px solid rgba(75,160,152,.12)}
+.panel h3{color:var(--teal);font-size:16px;font-weight:600;margin-bottom:8px}
+.panel h3.mut{color:var(--muted)}
+
+/* table */
+table{width:100%;border-collapse:separate;border-spacing:0;margin-top:26px;border-radius:14px;overflow:hidden;font-size:14px}
+th{background:var(--dteal);color:var(--white);text-align:left;padding:12px 16px;font-weight:600}
+td{background:var(--card);padding:12px 16px;border-top:1px solid rgba(75,160,152,.15)}
+td b{color:var(--white)}
+
+/* steps */
+.steps{display:flex;flex-direction:column;gap:16px;margin-top:26px}
+.step{display:flex;gap:16px;align-items:flex-start}
+.step .n{flex:0 0 36px;height:36px;border-radius:50%;background:var(--teal);color:var(--navy);
+  display:grid;place-items:center;font-weight:700;font-size:16px}
+.step b{color:var(--white);font-weight:600}
+.step p{font-size:14px;margin-top:2px}
+
+/* tabs */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}
+.tabs button{padding:9px 18px;border-radius:999px;background:var(--card);color:var(--body);
+  font-size:13.5px;font-weight:500;transition:.2s;border:1px solid rgba(75,160,152,.15)}
+.tabs button.on{background:var(--teal);color:var(--navy);font-weight:600}
+.tabpanes{margin-top:18px}
+.tabpane{display:none}.tabpane.on{display:block;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px}
+.stat{background:var(--card);border-radius:16px;padding:28px 18px;text-align:center;border:1px solid rgba(75,160,152,.12)}
+.stat .n{font-size:clamp(38px,6vw,58px);font-weight:800;color:var(--teal)}
+.stat p{font-size:13.5px;margin-top:8px}
+
+/* flip cards */
+.flips{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:26px}
+.flip{perspective:900px;height:130px;cursor:pointer}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip.done .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;padding:18px;
+  display:flex;flex-direction:column;justify-content:center}
+.face.f{background:var(--card);border:1px solid rgba(75,160,152,.15)}
+.face.f h3{color:var(--white);font-size:16px;font-weight:600}
+.face.f span{color:var(--muted);font-size:12px;margin-top:8px}
+.face.b{background:var(--dteal);transform:rotateY(180deg)}
+.face.b p{color:var(--white);font-size:13.5px;line-height:1.45}
+
+/* prompt builder */
+.pb-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.pb-btns button{padding:11px 20px;border-radius:12px;background:var(--card);border:1px solid rgba(75,160,152,.2);
+  color:var(--white);font-weight:600;font-size:14px;transition:.2s}
+.pb-btns button.used{background:var(--teal);color:var(--navy)}
+#pbOut{margin-top:18px;min-height:86px}
+#pbOut .chip{display:block}
+.meter{height:10px;background:var(--card);border-radius:999px;margin-top:18px;overflow:hidden}
+.meter i{display:block;height:100%;width:2%;background:var(--teal);border-radius:999px;transition:width .5s ease}
+#pbLabel{font-size:13px;color:var(--muted);margin-top:8px;text-align:right}
+
+/* toggle compare */
+.switch{display:flex;gap:0;margin:24px auto 0;width:max-content;background:var(--card);border-radius:999px;padding:4px}
+.switch button{padding:9px 22px;border-radius:999px;font-size:13.5px;font-weight:600;color:var(--muted)}
+.switch button.on{background:var(--teal);color:var(--navy)}
+#cmpOut{margin-top:18px}
+#cmpVerdict{margin-top:14px;font-size:14px;text-align:center}
+
+/* checklist */
+.checks{display:flex;flex-direction:column;gap:12px;margin-top:26px}
+.check{display:flex;gap:14px;align-items:center;background:var(--card);border-radius:14px;padding:14px 18px;cursor:pointer;
+  border:1px solid rgba(75,160,152,.12);transition:.2s}
+.check .box{flex:0 0 26px;height:26px;border-radius:8px;border:2px solid var(--teal);display:grid;place-items:center;
+  color:transparent;font-weight:700;transition:.2s}
+.check.on .box{background:var(--teal);color:var(--navy)}
+.check b{color:var(--white);font-weight:600;font-size:14.5px}
+.check span{color:var(--muted);font-size:13px}
+#autoBanner{margin-top:22px;text-align:center;opacity:.25;transition:.4s;filter:grayscale(1)}
+#autoBanner.lit{opacity:1;filter:none;transform:scale(1.04)}
+
+/* quiz */
+.quiz{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+.qopt{background:var(--card);border-radius:16px;padding:20px;cursor:pointer;border:2px solid transparent;transition:.2s;text-align:left}
+.qopt:hover{border-color:rgba(75,160,152,.4)}
+.qopt.pick-right{border-color:var(--teal);background:var(--dteal)}
+.qopt.pick-wrong{border-color:#b46a6a}
+.qopt h4{color:var(--muted);font-size:11px;letter-spacing:2px;margin-bottom:10px}
+.qopt p{font-size:13.5px;line-height:1.55}
+#qReveal{margin-top:18px;text-align:center;font-size:14px;opacity:0;transition:.4s}
+#qReveal.show{opacity:1}
+
+/* flow anim */
+.flow{display:flex;gap:0;align-items:stretch;justify-content:center;margin-top:30px;flex-wrap:wrap}
+.fnode{background:var(--card);border-radius:16px;padding:20px;width:230px;border:1px solid rgba(75,160,152,.15);
+  animation:pulse 2.6s ease infinite}
+.fnode:nth-child(3){animation-delay:.8s}.fnode:nth-child(5){animation-delay:1.6s}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(75,160,152,0)}45%{box-shadow:0 0 0 7px rgba(75,160,152,.16)}}
+.fnode .pill{margin-bottom:12px}
+.fnode p{font-size:14px}
+.farrow{display:grid;place-items:center;color:var(--teal);font-size:26px;font-weight:700;padding:0 12px}
+
+/* timeline */
+.tl{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:28px}
+.tl .card h3{color:var(--teal)}
+
+/* nav arrows + hints */
+#navL,#navR{position:fixed;bottom:20px;width:46px;height:46px;border-radius:50%;background:var(--card);
+  color:var(--teal);font-size:19px;display:grid;place-items:center;z-index:40;transition:.2s;border:1px solid rgba(75,160,152,.25)}
+#navR{right:20px}#navL{right:76px}
+#navL:hover,#navR:hover{background:var(--teal);color:var(--navy)}
+#hint{position:fixed;bottom:30px;left:24px;font-size:11.5px;color:var(--muted);z-index:40}
+#hint kbd{background:var(--card);border-radius:5px;padding:2px 7px;font-family:inherit;color:var(--teal);font-size:11px}
+
+/* overview grid */
+#ov{position:fixed;inset:0;background:rgba(15,23,40,.96);backdrop-filter:blur(10px);z-index:60;
+  overflow-y:auto;padding:70px 5vw 60px;display:none}
+#ov.open{display:block;animation:fadeIn .25s ease}
+#ov h2{margin-bottom:26px}
+.ovsec{margin-bottom:26px}
+.ovsec h4{color:var(--teal);font-size:13px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;font-weight:600}
+.ovsec .btns{display:flex;flex-wrap:wrap;gap:8px}
+.ovsec button{background:var(--card);border-radius:10px;padding:9px 14px;font-size:13px;color:var(--body);
+  border:1px solid rgba(75,160,152,.15);transition:.2s}
+.ovsec button:hover{background:var(--teal);color:var(--navy)}
+.ovsec button.here{border-color:var(--teal);color:var(--teal);font-weight:600}
+#ovClose{position:fixed;top:14px;right:18px;font-size:26px;color:var(--muted);z-index:61}
+
+/* notes */
+#notes{position:fixed;bottom:80px;right:20px;width:min(380px,86vw);background:var(--navy2);border:1px solid var(--dteal);
+  border-radius:14px;padding:16px 18px;font-size:13px;line-height:1.55;z-index:45;display:none;box-shadow:0 12px 34px rgba(0,0,0,.5)}
+#notes.open{display:block}
+#notes .t{color:var(--teal);font-weight:600;font-size:11px;letter-spacing:2px;margin-bottom:8px}
+
+@media (max-width:760px){
+  .g3,.stats,.tl{grid-template-columns:1fr 1fr}
+  .g2,.twocol,.flips,.quiz{grid-template-columns:1fr}
+  .farrow{transform:rotate(90deg);padding:8px 0}
+  .flow{flex-direction:column;align-items:center}
+  #hint{display:none}
+}
+@media (max-width:460px){.g3,.stats,.tl{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header id="bar">
+  <button id="menuBtn" title="Overview (G)">☰</button>
+  <div id="brand">• AI ALCHEMIST •</div>
+  <div id="secLabel"></div>
+  <div id="counter"></div>
+  <button id="gridBtn" title="Speaker notes (N)">✎</button>
+</header>
+<div id="prog"></div>
+
+<main id="stage"></main>
+
+<button id="navL" title="Back (←)">←</button>
+<button id="navR" title="Next (→)">→</button>
+<div id="hint"><kbd>→</kbd> next &nbsp;·&nbsp; <kbd>G</kbd> overview &nbsp;·&nbsp; <kbd>N</kbd> notes</div>
+
+<div id="ov"><button id="ovClose">✕</button><div class="inner"><h2>Jump anywhere</h2><div id="ovBody"></div></div></div>
+<div id="notes"><div class="t">PRESENTER NOTES</div><div id="notesBody"></div></div>
+
+<script>
+/* ============ CONTENT ============ */
+const S = []; // {sec, html, note}
+const sec = (name)=>name;
+let cur = 0;
+
+function add(secName, html, note){ S.push({sec:secName, html, note:note||""}); }
+
+const IC = e=>`<span class="ic">${e}</span>`;
+const cards = (items,cols=3,rv=true)=>`<div class="grid g${cols}">${items.map(i=>
+  `<div class="card ${rv?'rv':''}">${i.e?IC(i.e):''}<h3>${i.t}</h3><p>${i.b}</p></div>`).join('')}</div>`;
+const rows = items=>`<div class="rows">${items.map(i=>
+  `<div class="row rv">${IC(i.e)}<div><b>${i.t}</b><p>${i.b}</p></div></div>`).join('')}</div>`;
+const chips = arr=>`<div class="chips">${arr.map(c=>`<div class="chip rv">${c}</div>`).join('')}</div>`;
+const steps = arr=>`<div class="steps">${arr.map((s,i)=>
+  `<div class="step rv"><div class="n">${i+1}</div><div><b>${s.t}</b><p>${s.b}</p></div></div>`).join('')}</div>`;
+const head = (k,t)=>`<div class="kicker"><span class="pill">${k}</span></div><h2>${t}</h2>`;
+const divider = (p,t,s)=>`<div class="inner center"><span class="pill">PART ${p}</span><h1 style="margin-top:22px">${t}</h1><div class="dots"><i></i><i></i><i></i></div><p class="sub">${s}</p></div>`;
+
+/* ---- 0 · Home ---- */
+add("Welcome", `<div class="inner center">
+  <span class="pill rv">AI &amp; AUTOMATION · REAL-LIFE APPLICATIONS</span>
+  <h1 class="rv" style="margin-top:24px">Turning Everyday<br>Tasks Into Gold</h1>
+  <div class="dots rv"><i></i><i></i><i></i></div>
+  <p class="sub rv">A practical, no-jargon tour of AI at work — from your first prompt to your first automation.</p>
+  <p class="foot muted rv">And no — this isn't PowerPoint. More on that later.</p>
+</div>`, "Welcome the room. You're an enthusiast, not an AI expert — if you can do this, so can they. AI helped build nearly everything they'll see today, including this very page. Navigate with → or swipe.");
+
+add("Welcome", `<div class="inner">
+  ${head("WHY WE'RE HERE","This isn't coming. It's already here.")}
+  <div class="stats">
+    <div class="stat rv"><div class="n" data-count="75">0</div><span class="n" style="font-size:inherit"></span><p>of knowledge workers already use AI at work</p></div>
+    <div class="stat rv"><div class="n" data-count="46">0</div><p>of them started in just the last six months</p></div>
+    <div class="stat rv"><div class="n" data-count="90">0</div><p>say it saves them time every single day</p></div>
+  </div>
+  <p class="foot muted rv">Source: Microsoft Work Trend Index, 2024</p>
+</div>`, "Ask for hands: who used ChatGPT or Copilot this month? Whatever the number, it proves the slide. People are already using AI quietly — today is about doing it well, safely, on purpose.");
+
+add("Welcome", `<div class="inner">
+  ${head("LOOK AHEAD","The future of management is people + agents")}
+  ${cards([
+    {e:"👥",t:"Teams are changing",b:"Tomorrow's team is a blend of people and AI agents — and managing that blend is becoming a core skill."},
+    {e:"🏃",t:"The gap compounds",b:"AI is here to stay. The distance between those who embrace it and those who avoid it grows every month."},
+    {e:"💡",t:"The real prize",b:"Hand the routine work over — and buy back time for the creative, strategic work only humans can do."}])}
+  <p class="foot rv">Embrace it, and you drive the change — instead of being driven by it.</p>
+</div>`, "Deliver as opportunity, not threat. The payoff of handing routine work to AI is time for the work only humans can do.");
+
+add("Welcome", `<div class="inner">
+  ${head("GROUND RULES","Four promises for today")}
+  ${cards([
+    {e:"🚫",t:"No jargon",b:"Plain English all day. If a technical word sneaks in, call it out — loudly."},
+    {e:"🎯",t:"Real tasks only",b:"Everything today maps to your actual week: emails, meetings, reports, spreadsheets."},
+    {e:"🤝",t:"No silly questions",b:"Everyone in this room started somewhere. Today is a judgement-free zone."},
+    {e:"🤖",t:"Practising what I preach",b:"I'm an enthusiast, not an AI expert — and AI helped build nearly everything you'll see."}],2)}
+</div>`, "The fourth promise is the credibility move — this page itself is the proof of concept, but don't spoil the reveal yet.");
+
+/* ---- Part 1 · Foundations ---- */
+add("What AI actually is", divider(1,"What AI actually is","No jargon. Promise."),
+ "MODULE GUIDE: keep for beginner/mixed rooms. Compress for AI-regulars: keep only 'brilliant at / struggles', 'makes things up' and the intern. Never cut the hallucination screen. Use the overview (G) to skip screens live.");
+
+add("What AI actually is", `<div class="inner center">
+  <span class="pill rv">IN ONE SENTENCE</span>
+  <h1 class="rv" style="font-size:clamp(26px,4vw,44px);margin-top:26px">AI is software you can talk to in plain English — and it talks back.</h1>
+  <div class="dots rv"><i></i><i></i><i></i></div>
+  <p class="sub rv" style="color:var(--body);font-weight:400">It has read a huge slice of the internet, and uses that to predict a genuinely useful response.<br>Think autocomplete — all grown up.</p>
+</div>`, "Let the sentence breathe. If someone asks how it works under the bonnet: park it for the break — today is about using it, not building it.");
+
+add("What AI actually is", `<div class="inner">
+  ${head("OUT OF THE BOX","What it can do, before any setup")}
+  ${cards([
+    {e:"✍️",t:"Draft & rewrite",b:"Emails, reports, updates — in any tone or length you ask for."},
+    {e:"📋",t:"Summarise",b:"Long threads, documents and transcripts down to the bits that matter."},
+    {e:"💡",t:"Brainstorm",b:"Twenty ideas in twenty seconds. You keep the three good ones."},
+    {e:"🎓",t:"Explain",b:"Any topic, at any level. “Explain this like I’m brand new.”"},
+    {e:"🔤",t:"Translate & re-tone",b:"Between languages — and between formal, friendly and firm."},
+    {e:"📊",t:"Work with data",b:"Spot patterns, build tables, draft formulas and explain them."}])}
+</div>`, "Ask everyone to silently pick the ONE tile that would save them most time this week — that becomes their exercise material in Part 3.");
+
+add("What AI actually is", `<div class="inner">
+  ${head("HONEST TRUTHS","Brilliant at some things. Not others.")}
+  <div class="twocol">
+    <div class="panel rv"><h3>Brilliant at</h3><ul class="tick">
+      <li>First drafts of almost anything</li><li>Summarising long documents</li>
+      <li>Repetitive, formulaic writing</li><li>Structuring your messy thoughts</li>
+      <li>Explaining things simply</li></ul></div>
+    <div class="panel rv"><h3 class="mut">Struggles with</h3><ul class="tick x">
+      <li>Facts it can’t source — it may guess</li><li>Your company context (until you share it)</li>
+      <li>Precise maths, unaided</li><li>Knowing when it’s wrong</li>
+      <li>Judgement calls — that’s still you</li></ul></div>
+  </div>
+</div>`, "The honesty screen buys more credibility than any demo. Everything on the right is solved by YOU: context, checking, judgement.");
+
+add("What AI actually is", `<div class="inner">
+  ${head("THE CATCH","Sometimes it just makes things up")}
+  <p class="sub rv" style="text-align:center;font-weight:600;color:var(--white);font-size:clamp(17px,2.2vw,23px)">Confident is not the same as correct.</p>
+  ${cards([
+    {e:"🎭",t:"What it looks like",b:"Invented names, dates, statistics and citations — written with total confidence."},
+    {e:"🎲",t:"Why it happens",b:"It predicts a likely-sounding answer. It isn’t looking truth up in a database."},
+    {e:"🔍",t:"Your defence",b:"Check every name, number, date and quote before it leaves your desk."}])}
+  <p class="foot rv"><span class="pill dark">THE RULE: &nbsp;AI DRAFTS. YOU DECIDE.</span></p>
+</div>`, "Don't soften this — it's the day's most important safety lesson. Tell one real hallucination story. The rule is the motto of the whole session.");
+
+add("What AI actually is", `<div class="inner">
+  ${head("THE MINDSET","Treat it like a brilliant new intern")}
+  <div class="twocol">
+    <div class="panel rv"><h3>What you get</h3><ul class="tick">
+      <li>Astonishing speed, on tap</li><li>Endless willingness — never bored</li>
+      <li>Has read more than any of us ever will</li><li>Costs pennies per task</li></ul></div>
+    <div class="panel rv"><h3>What it needs</h3><ul class="tick">
+      <li>A clear brief — who, what, why, how</li><li>Context about your business</li>
+      <li>Feedback: “good, now shorter”</li><li>A review before anything is sent</li></ul></div>
+  </div>
+  <p class="foot rv">Manage it well, and it does astonishing work. Manage it badly, and… well. Interns.</p>
+</div>`, "The mental model that carries the day: brief it well, give it context, review its work. Everything they learn today falls out of this picture.");
+
+add("What AI actually is", `<div class="inner">
+  ${head("MYTH-BUSTING","The four worries in every room — tap to bust")}
+  <div class="flips">
+    <div class="flip rv"><div class="in"><div class="face f"><h3>“It’ll take my job”</h3><span>tap to flip</span></div><div class="face b"><p>It takes tasks, not jobs. The people who master it will outpace the people who don’t.</p></div></div></div>
+    <div class="flip rv"><div class="in"><div class="face f"><h3>“You have to be technical”</h3><span>tap to flip</span></div><div class="face b"><p>If you can write an email, you’re qualified. Today will prove it.</p></div></div></div>
+    <div class="flip rv"><div class="in"><div class="face f"><h3>“Using it is cheating”</h3><span>tap to flip</span></div><div class="face b"><p>So was the calculator, apparently. It’s a tool — the judgement is still yours.</p></div></div></div>
+    <div class="flip rv"><div class="in"><div class="face f"><h3>“It’s a passing fad”</h3><span>tap to flip</span></div><div class="face b"><p>It’s already built into Word, Excel, Teams and your inbox. That ship has sailed.</p></div></div></div>
+  </div>
+</div>`, "Interactive moment #1 — invite someone to pick a card and read it aloud, then flip it on screen (or let them come up and tap). Warm, not dismissive.");
+
+/* ---- Part 2 · Tools ---- */
+add("Meet the tools", divider(2,"Meet the tools","Four assistants. One transferable skill."),
+ "MODULE GUIDE: tailor to the room — M365 org: full Copilot focus; Google shop: expand Gemini. The message: learn one well and you've learned 80% of all of them.");
+
+add("Meet the tools", `<div class="inner">
+  ${head("THE BIG FOUR","The assistants you’ll actually meet")}
+  ${cards([
+    {e:"🟦",t:"Copilot · Microsoft",b:"Lives inside Word, Excel, Outlook and Teams. Knows your work context."},
+    {e:"🟢",t:"ChatGPT · OpenAI",b:"The household name. A fast, creative all-rounder with a useful free tier."},
+    {e:"🟠",t:"Claude · Anthropic",b:"Careful, natural writing. Superb with long documents and nuanced tone."},
+    {e:"🔵",t:"Gemini · Google",b:"Plugged into Google Search and Workspace. A strong research partner."}],2)}
+  <p class="foot rv">Learn one well, and you’ve learned 80% of all of them.</p>
+</div>`, "Fast orientation, not a review site. Ask who uses what — weight the next screens to the room's mix. Avoid version numbers; they date instantly.");
+
+add("Meet the tools", `<div class="inner">
+  ${head("TWO KINDS OF ASSISTANT","Your PA — and your second brain")}
+  <div class="twocol">
+    <div class="panel rv"><h3>Copilot · your PA</h3><ul class="tick">
+      <li>Task-oriented — instant productivity</li><li>Works across Microsoft 365</li>
+      <li>Drafts replies with the whole thread in view</li><li>Summarises meetings, chats and your files</li></ul></div>
+    <div class="panel rv"><h3>GPTeal · your AI brain</h3><ul class="tick">
+      <li>General-purpose reasoning &amp; problem-solving</li><li>Sees only what you give it — and thinks harder</li>
+      <li>Your on-demand subject-matter expert</li><li>Complex projects, brainstorming, serious writing</li></ul></div>
+  </div>
+  <p class="foot rv">Copilot for tasks. GPTeal for thinking. Use each for the right job.</p>
+</div>`, "GPTeal is our internal approved GPT tool — SWAP THE NAME for this audience's equivalent (their internal GPT, ChatGPT Enterprise, Claude…). Mention model selection: fast model for quick tasks, deeper reasoning model for hard ones.");
+
+add("Meet the tools", `<div class="inner">
+  ${head("SPOTLIGHTS","Four tools, one tap each")}
+  <div class="tabs" data-tabs>
+    <button class="on">Copilot</button><button>ChatGPT</button><button>Claude</button><button>Gemini</button>
+  </div>
+  <div class="tabpanes">
+    <div class="tabpane on">${rows([
+      {e:"📌",t:"In your apps.",b:"Built into Word, Excel, Outlook, Teams and PowerPoint — no new tab to learn."},
+      {e:"🔐",t:"Knows your work, keeps it safe.",b:"Draws on your emails, files and meetings — only within your existing permissions, inside your organisation’s boundary."},
+      {e:"🗝️",t:"One licence, every app.",b:"The natural starting point for Microsoft 365 organisations."}])}</div>
+    <div class="tabpane">${rows([
+      {e:"⚡",t:"Fast all-rounder.",b:"Quick answers, creative ideas, everyday drafting — it turned AI into a verb."},
+      {e:"🎙️",t:"Talks out loud.",b:"Voice mode makes it a hands-free thinking partner on the commute."},
+      {e:"🧩",t:"Custom GPTs.",b:"Reusable mini-assistants for repeat jobs — set up once, use forever. Free tier to start tonight."}])}</div>
+    <div class="tabpane">${rows([
+      {e:"🪶",t:"Writes like a person.",b:"Natural, warm drafting — noticeably less “AI voice” to edit out."},
+      {e:"📚",t:"Swallows long documents.",b:"Paste a 100-page report and ask questions of the whole thing at once."},
+      {e:"💬",t:"Careful with nuance.",b:"Strong on delicate tone — apologies, feedback, sensitive updates."}])}</div>
+    <div class="tabpane">${rows([
+      {e:"🔎",t:"Search in its DNA.",b:"Research with live sources you can actually check."},
+      {e:"📧",t:"Woven through Workspace.",b:"Drafts in Gmail and Docs, summarises in Drive — on Workspace plans."},
+      {e:"🖼️",t:"Sees pictures and video.",b:"Ask questions about images, screenshots and clips, not just text."}])}</div>
+  </div>
+</div>`, "App-feel moment: tab through the four tools live. Linger on whichever the room actually has. Free consumer versions are personal tools — company policy applies (Part 7).");
+
+add("Meet the tools", `<div class="inner">
+  ${head("CHEAT SHEET","Which one, when?")}
+  <table class="rv"><tr><th>The task</th><th>Reach for</th><th>Why</th></tr>
+  <tr><td>Emails, meetings and files at work</td><td><b>Copilot</b></td><td>It’s already in the room — and it knows your context</td></tr>
+  <tr><td>Quick answers and brainstorms</td><td><b>ChatGPT</b></td><td>Fast, creative, free to start</td></tr>
+  <tr><td>Long documents and careful writing</td><td><b>Claude</b></td><td>Big memory, human-sounding drafts</td></tr>
+  <tr><td>Research across the live web</td><td><b>Gemini</b></td><td>Google Search built in, sources you can check</td></tr></table>
+  <p class="foot rv"><span class="pill dark">RULE OF THUMB: &nbsp;THE TOOL INSIDE YOUR WORKFLOW WINS</span></p>
+</div>`, "People photograph this one — pause on it. The tools leapfrog each other constantly; the craft you learn next transfers to whichever wins next quarter.");
+
+/* ---- Part 3 · Asking ---- */
+add("The craft of asking", divider(3,"The craft of asking","Prompting, minus the mystique."),
+ "MODULE GUIDE: the core module — protect it at all costs. Everything is tool-agnostic. 'Same tool, two people, wildly different results. The difference is the ask.'");
+
+add("The craft of asking", `<div class="inner">
+  ${head("THE UNLOCK","Talk to it like a colleague, not a search engine")}
+  <div class="twocol">
+    <div class="panel rv"><h3 class="mut">The search habit</h3>
+      <div class="chip" style="margin:10px 0">“quarterly report template”</div>
+      <p style="font-size:13.5px">You get ten links. The work is still yours to do.</p></div>
+    <div class="panel rv"><h3>The AI habit</h3>
+      <div class="chip" style="margin:10px 0;font-size:13px">“Draft our Q2 report intro: sales up 12%, two new hires, one delayed project. Confident but honest. 200 words.”</div>
+      <p style="font-size:13.5px">You get the work done — first draft in seconds.</p></div>
+  </div>
+  <p class="foot rv">The quality of the answer matches the quality of the ask.</p>
+</div>`, "Twenty years of Google trained us to type keywords. Keywords give AI nothing. Full sentences, background, what you need and why.");
+
+add("The craft of asking", `<div class="inner">
+  ${head("THE FRAMEWORK","The four-part brief — build one live")}
+  <div class="pb-btns rv">
+    <button data-pb="Act as an HR manager writing to the whole company.">1 · WHO</button>
+    <button data-pb="Draft a 150-word update about the office move.">2 · WHAT</button>
+    <button data-pb="Staff are anxious about parking, so be reassuring.">3 · WHY</button>
+    <button data-pb="Warm but professional. Bullet points. One clear action.">4 · HOW</button>
+  </div>
+  <div id="pbOut"><div class="chip" id="pbChip" style="color:var(--muted)">Tap the four pieces to assemble the brief…</div></div>
+  <div class="meter"><i id="pbBar"></i></div><div id="pbLabel">Result quality: vague</div>
+  <p class="foot muted rv">You won’t need all four every time — but each one you add sharpens the result.</p>
+</div>`, "Interactive moment #2 — build the brief live, or invite an audience member up to tap the four buttons and watch the quality meter climb. Deliberately NOT called 'prompt engineering'.");
+
+add("The craft of asking", `<div class="inner">
+  ${head("SEE THE DIFFERENCE","Same tool. Same task. Different ask.")}
+  <div class="switch rv"><button class="on" data-cmp="0">The weak ask</button><button data-cmp="1">The strong ask</button></div>
+  <div id="cmpOut">
+    <div class="chip" id="cmpChip">“Write an email about the delay.”</div>
+    <p id="cmpVerdict" style="color:var(--muted)">Generic. Stiff. Could be from anyone, about anything. You’ll rewrite most of it.</p>
+  </div>
+  <p class="foot rv">Thirty seconds more effort. A completely different result.</p>
+</div>`, "Flip the toggle live. If you can, run both prompts in a real tool and show the outputs. The strong ask has a WHO, WHAT, WHY and HOW.");
+
+add("The craft of asking", `<div class="inner">
+  ${head("KEEP TALKING","It’s a conversation, not a slot machine")}
+  ${chips(["“Make it shorter.”","“Warmer.”","“Now as three bullet points.”","“Add a subject line.”"])}
+  <p class="foot rv">The first answer is a first draft. Still wrong after three nudges? Rewrite the brief — something was missing.</p>
+</div>`, "Beginners type one prompt, get mediocrity, and conclude AI isn't very good. Each nudge is three words and two seconds. You're the editor; it's the fast typist.");
+
+add("The craft of asking", `<div class="inner">
+  ${head("THE PRO MOVE","Show it, don’t just tell it")}
+  <div class="twocol">
+    <div class="panel rv"><h3>Give it your best past work</h3>
+      <div class="chip" style="margin:10px 0;font-size:13px">“Here’s an email I’m proud of. Match this style and tone for the new draft.”</div>
+      <p style="font-size:13.5px">Output that sounds like you — not a robot doing an impression of you.</p></div>
+    <div class="panel rv"><h3>Give it the raw material</h3>
+      <div class="chip" style="margin:10px 0;font-size:13px">“Here are my rough notes from the call. Turn them into minutes with clear actions.”</div>
+      <p style="font-size:13.5px">With your source material it’s brilliant. Without it, it’s guessing politely.</p></div>
+  </div>
+</div>`, "The tip people email you about afterwards. Quietly solves the 'it sounds robotic' complaint before anyone raises it.");
+
+add("The craft of asking", `<div class="inner">
+  ${head("EVERYDAY WINS","Steal these prompts")}
+  <div class="tabs" data-tabs><button class="on">Emails &amp; meetings</button><button>Documents &amp; thinking</button></div>
+  <div class="tabpanes">
+    <div class="tabpane on">${rows([
+      {e:"📥",t:"The drowning inbox.",b:"“Summarise this thread and list anything I’ve been asked to do.”"},
+      {e:"📅",t:"Meeting prep.",b:"“Based on this agenda, give me five sharp questions to ask.”"},
+      {e:"📝",t:"Minutes &amp; actions.",b:"“Turn these rough notes into minutes with actions and owners.”"},
+      {e:"↩️",t:"The awkward reply.",b:"“Draft a firm but polite response declining this request.”"}])}</div>
+    <div class="tabpane">${rows([
+      {e:"📄",t:"The blank page.",b:"“Draft a one-page proposal from these bullet points.”"},
+      {e:"📖",t:"Jargon, translated.",b:"“Explain this policy like I’m brand new to the company.”"},
+      {e:"💡",t:"Ideas on tap.",b:"“Give me 20 name ideas — then pick your best three and say why.”"},
+      {e:"👓",t:"The sense-check.",b:"“What’s unclear, missing or likely to be challenged in this doc?”"}])}</div>
+  </div>
+</div>`, "Encourage photos. Every prompt works in any tool; in Copilot the thread or meeting is already in context — teases Part 5.");
+
+add("The craft of asking", `<div class="inner">
+  ${head("LEVEL UP","Power prompts: several deliverables in one ask")}
+  <div class="lbl rv">Coaching on demand</div>
+  <div class="chip rv">“Act as an HR partner. A manager must give difficult feedback tomorrow. Give me: a 60-second opening script, five questions to ask, three things to say if they shut down, and a follow-up message under 80 words.”</div>
+  <div class="lbl rv">Guard-railed and bias-aware</div>
+  <div class="chip rv">“Compare this CV to the job description. Draft a warm, encouraging rejection email using only objective, job-related reasons — never personal or sensitive attributes. Leave placeholders for names.”</div>
+  <p class="foot rv">Stacked asks + a format + guardrails, all in the prompt. That’s the mega-brief.</p>
+</div>`, "The hiring prompt shows guardrails IN the prompt — objective reasons only, no sensitive attributes, placeholders. Previews Part 7.");
+
+add("The craft of asking", `<div class="inner">
+  ${head("SET & FORGET","Teach it your taste — once")}
+  <div class="twocol">
+    <div class="panel rv"><h3>The house rules</h3><ul class="tick">
+      <li>Direct, casual tone — concise, no jargon</li><li>Bullet points and tables, not walls of text</li>
+      <li>Active voice; talk to me as “you”</li><li>Be candid and critical — don’t flatter me</li>
+      <li>Admit and fix errors; check the web first</li><li>No emojis. No em dashes.</li></ul></div>
+    <div class="panel rv"><h3>The banned-words list</h3>
+      <div class="chip" style="margin:10px 0">ensure · crucial · delve · journey · tapestry · game changer · unlock · seamless · robust · revolutionary</div>
+      <p style="font-size:13.5px">Paste your rules into the tool’s custom instructions once. Every answer after that sounds more like you.</p></div>
+  </div>
+</div>`, "This screen gets photographed too. Where it lives: ChatGPT/GPTeal settings → custom instructions; Claude Projects; for Copilot, paste at the start of important chats.");
+
+add("The craft of asking", `<div class="inner">
+  ${head("EXERCISE 1","Your turn: the four-part brief")}
+  ${steps([
+    {t:"Pick a real task from this week.",b:"An email you sent, a doc you wrote, a thread you waded through."},
+    {t:"Write the brief.",b:"Who it should act as · what you need · why · how it should look."},
+    {t:"Nudge it twice.",b:"Shorter. Warmer. As a table. Whatever gets it closer."},
+    {t:"Compare.",b:"How close is it to what you’d have written — and how long did it take?"}])}
+  <p class="foot rv"><span class="pill dark">≈ 15 MINUTES</span> &nbsp; Any tool you have access to — the craft is identical in all four.</p>
+</div>`, "Circulate constantly. Fastest coaching line: 'add the WHY and try again.' No laptop? Pair up. Debrief: two people read their before-and-after.");
+
+/* ---- Part 4 · Copilot ---- */
+add("Copilot in your day", divider(4,"Copilot in your working day","Same skill — now inside your apps."),
+ "MODULE GUIDE: requires an M365 audience. Cut entirely for non-Microsoft rooms. Leadership: fast flyover, no exercise. Demo with safe demo content — never your real inbox.");
+
+add("Copilot in your day", `<div class="inner">
+  ${head("THE APP TOUR","One assistant, five apps")}
+  <div class="tabs" data-tabs><button class="on">Outlook</button><button>Teams</button><button>Word &amp; PPT</button><button>Excel</button><button>Chat</button></div>
+  <div class="tabpanes">
+    <div class="tabpane on">${rows([
+      {e:"📥",t:"Summarise the saga.",b:"A week-long, 40-message thread becomes five lines — with the decisions flagged."},
+      {e:"✍️",t:"Draft from instructions.",b:"“Reply saying yes, but push the date to Friday.” It writes; you polish."},
+      {e:"💬",t:"Coaching before you send.",b:"Tone, clarity and how it might land — checked on your draft."},
+      {e:"🏖️",t:"Catch up after leave.",b:"“What did I miss?” beats an afternoon of archaeology."}])}</div>
+    <div class="tabpane">${rows([
+      {e:"🎥",t:"Never scribble minutes again.",b:"Recap: decisions, actions, who said what — from the transcript."},
+      {e:"🏃",t:"Arrive late, catch up live.",b:"“What did I miss?” — answered privately, mid-meeting."},
+      {e:"❓",t:"Interrogate the meeting.",b:"“What did we decide about the budget?” — days later."},
+      {e:"🔘",t:"One switch matters.",b:"It works from the transcript — recording and transcription need to be on (and known)."}])}</div>
+    <div class="tabpane">${rows([
+      {e:"📄",t:"Word: the blank page is over.",b:"Draft from a brief or another file; rewrite for tone; summarise 40 pages in a minute."},
+      {e:"📽️",t:"PowerPoint: doc to deck.",b:"A starter deck from a Word document, tidied layouts, speaker notes drafted."},
+      {e:"🎯",t:"Honest expectation.",b:"It gets you 70% of the way. The polish and the story are still yours."}])}</div>
+    <div class="tabpane">${rows([
+      {e:"📊",t:"Ask your data questions in English.",b:"“Which region grew fastest last quarter?” — answered from your sheet."},
+      {e:"🧮",t:"Formulas, explained.",b:"It suggests the formula and tells you what it does. You learn as you go."},
+      {e:"⚠️",t:"Two caveats.",b:"Format your data as a table (Ctrl+T) — and check its working. You own the numbers."}])}</div>
+    <div class="tabpane">${rows([
+      {e:"🔎",t:"One chat across everything.",b:"“What did Priya send me about the audit?” · “Summarise my meetings from yesterday.”"},
+      {e:"🗂️",t:"Finds the thing.",b:"“Find the latest version of the budget file.” Emails, chats, files — together."},
+      {e:"🌐",t:"Know your grounding.",b:"Work data or the web — know which mode you’re in. Make it your first tab of the morning."}])}</div>
+  </div>
+</div>`, "The tabbed tour IS the demo of app-style presenting. Linger per the room. If one live demo only: the Outlook thread summary — instant convert.");
+
+add("Copilot in your day", `<div class="inner">
+  ${head("COPILOT · YOUR PA","Kick-start your brain")}
+  ${rows([
+    {e:"☕",t:"Monday morning reboot.",b:"“Catch me up on last week — key emails, chats and decisions.”"},
+    {e:"🕵️",t:"Detective Copilot.",b:"“Find the email where I promised the pricing update.” It will."},
+    {e:"📋",t:"Agendas that write themselves.",b:"“Draft next week’s agenda from the last transcript and open actions.”"},
+    {e:"🎯",t:"Help me prepare.",b:"“Brief me for my 2pm from the transcripts and emails — and find us 30 minutes next week.”"}])}
+</div>`, "Highest-frequency wins in the whole session. Detective Copilot always lands — everyone has lost an email they KNOW they sent. Encourage picking ONE as their week-one habit.");
+
+add("Copilot in your day", `<div class="inner">
+  ${head("BUILD YOUR OWN","Agents: a chatbot for your team’s stuff")}
+  ${cards([
+    {e:"🤖",t:"What it is",b:"A Copilot chatbot pointed at one place — a SharePoint site, a policy pack, a project folder."},
+    {e:"📚",t:"What it does",b:"Answers only from that content: the handbook bot, the policy Q&amp;A, the project FAQ."},
+    {e:"✨",t:"How you build it",b:"Describe it in plain English in the agent builder. Minutes, not months."},
+    {e:"👥",t:"Why it matters",b:"New starters and busy colleagues stop asking you — they ask the agent."}],2)}
+  <p class="foot muted rv">Honest caveat: it’s only as good as the content you point it at. Stale site, stale answers.</p>
+</div>`, "DEMO: build one live on a SharePoint site — most memorable moment of Part 4 if licences allow.");
+
+add("Copilot in your day", `<div class="inner">
+  ${head("EXERCISE 2","The Copilot scavenger hunt")}
+  ${steps([
+    {t:"Summarise your longest thread.",b:"In Outlook: pick the messiest one you’ve got. Enjoy the moment."},
+    {t:"Ask Chat what you missed.",b:"“Summarise my meetings and emails from yesterday.”"},
+    {t:"Draft tomorrow’s first email.",b:"Give Copilot the who, what, why and how — Part 3 in action."},
+    {t:"Bonus: recap a meeting.",b:"Any recorded Teams meeting — ask for decisions and actions."}])}
+  <p class="foot rv"><span class="pill dark">≈ 15 MINUTES</span> &nbsp; No licence? Pair up — one drives, one directs.</p>
+</div>`, "Licence-dependent: pair licensed with unlicensed. No licences at all? Demo from the front and rerun Exercise 1 on a work task. Debrief: 'what surprised you?'");
+
+/* ---- Part 5 · Tips ---- */
+add("Tips & tricks", divider(5,"Tips &amp; tricks","Small moves. Outsized returns."),
+ "MODULE GUIDE: pick-and-mix — every screen stands alone; skip freely via the overview (G). Highest-energy section. 'This part is the box of tricks.'");
+
+add("Tips & tricks", `<div class="inner">
+  ${head("CREATE","Images: describe exactly what you want")}
+  <div class="chip rv">“Create a 16:9 title-slide image. Colours: teal #138F8F, navy #0B2340, white. Style: modern, minimal, flat. Show a workflow — Request intake → Triage → Draft → Review → Send → Log — plus a small friendly robot. PNG, 1920 × 1080.”</div>
+  ${rows([{e:"🎨",t:"Why it works:",b:"exact colours, a named style, the layout spelled out, format and size included. Nothing left to chance."}])}
+  <p class="foot muted rv">Honesty corner: it won’t always nail it first time — circles that won’t rotate, “transparent” backgrounds that aren’t. Nudge it, same as text.</p>
+</div>`, "Demo idea: run this prompt in Copilot, GPTeal and Gemini and compare the three results. Show YOUR fails — owning them builds more trust than a perfect demo.");
+
+add("Tips & tricks", `<div class="inner">
+  ${head("CREATE","An infographic from a single prompt")}
+  <div class="chip rv">“Design an ‘AI at Work: 2025 snapshot’ infographic in my brand colours. Stat cards: 1 in 10 still don’t use AI · 58% use it weekly or daily · 56% hide their AI use. Add sections for adoption, sentiment and productivity. Clean, flat, presentation-ready.”</div>
+  <div class="stats">
+    <div class="stat rv"><div class="n" style="font-size:34px">1 in 10</div><p>still don’t use AI at all</p></div>
+    <div class="stat rv"><div class="n" style="font-size:34px">58%</div><p>use it weekly or daily</p></div>
+    <div class="stat rv"><div class="n" style="font-size:34px">56%</div><p>hide their AI use at work</p></div>
+  </div>
+  <p class="foot muted rv">MSD: Made-up Statistics, for Demonstration — always label demo data as demo data.</p>
+</div>`, "The joke that teaches: AI will happily typeset invented numbers beautifully. A beautiful chart of made-up data is more dangerous than an ugly one.");
+
+add("Tips & tricks", `<div class="inner">
+  ${head("SHORTCUT","A screenshot is a prompt")}
+  ${rows([
+    {e:"📸",t:"Snip the problem.",b:"Windows key + Shift + S — grab exactly what you’re stuck on, paste it in."},
+    {e:"📊",t:"Excel grief.",b:"Snip the error and the formula bar together: “What’s wrong here?”"},
+    {e:"⚡",t:"Power Automate grief.",b:"Snip the flow. It reads the steps and spots the gap."},
+    {e:"💬",t:"Faster than words.",b:"Describing a screen in sentences is the slow way. Just show it."}])}
+</div>`, "Lowest effort, highest return trick in the session.");
+
+add("Tips & tricks", `<div class="inner">
+  ${head("UNDERUSED","Talk first. Tidy later.")}
+  ${rows([
+    {e:"🎙️",t:"Brain-dump by voice.",b:"Hit the mic in Copilot — or on your phone — and just talk. Rambling is fine."},
+    {e:"✨",t:"Then let it tidy.",b:"Rambling in, structure out: an email, a list, a plan."},
+    {e:"⏱️",t:"Reclaim dead time.",b:"Commutes and post-meeting walks quietly become drafting time."}])}
+  <div class="chips"><div class="chip rv">Try: “Turn this rambling into a clear email with a subject line and three bullet points.”</div></div>
+</div>`, "Wins over people who hate typing or freeze at a blank page. Brave? Ramble live for 30 seconds and run the tidy-up prompt.");
+
+add("Tips & tricks", `<div class="inner">
+  ${head("PARTY TRICK","Can you spot the AI? Tap your guess")}
+  <div class="quiz rv">
+    <button class="qopt" data-q="human"><h4>EMAIL A</h4><p>Hi both — quick one. The Q3 numbers slipped again (long story, mostly the supplier thing). I’ll have the fixed sheet over by Thurs. Shout if that wrecks anything on your end.</p></button>
+    <button class="qopt" data-q="ai"><h4>EMAIL B</h4><p>I hope this message finds you well. I wanted to provide a <b>comprehensive update</b> regarding our quarterly figures — a truly <b>unparalleled</b> quarter. Rest assured, we remain committed to <b>best-in-class</b> delivery going forward.</p></button>
+  </div>
+  <div id="qReveal"></div>
+  <div class="twocol" style="margin-top:20px">
+    <div class="panel rv"><h3>On the page</h3><ul class="tick x">
+      <li>The vocabulary: breathtaking, unparalleled, revolutionary…</li><li>Em dashes — everywhere — like this</li>
+      <li>Bold text scattered for no reason</li><li>Unsure? Ask an AI if it wrote it</li></ul></div>
+    <div class="panel rv"><h3>In the interview</h3><ul class="tick x">
+      <li>A 3–5 second delay, then oddly fluent answers</li><li>Suspiciously consistent, structure-perfect replies</li>
+      <li>Can’t explain why they chose what they chose</li></ul></div>
+  </div>
+  <p class="foot muted rv">Probes: “Pause there — why that choice?” · “Explain it like I’m new.” · “What would you change tomorrow?”</p>
+</div>`, "Interactive moment #3 — let the room vote before tapping. Close with the em-dash wink: Alt+0151 (Windows) / Option+Shift+hyphen (Mac). Use sparingly — now they know why.");
+
+add("Tips & tricks", `<div class="inner">
+  ${head("MINDSET","Stop avoiding. Start acting.")}
+  ${chips([
+    "“Ask me why I’m avoiding my most important task — and don’t accept my first answer.”",
+    "“Show me the most painful consequences of another week of delay.”",
+    "“Give me a five-minute warm-up task to get me moving.”"])}
+  <p class="foot rv">It coaches confidence, motivation and balance too — a thinking partner, not just a typing one.</p>
+</div>`, "Frame carefully: a thinking partner for everyday friction, NOT a substitute for real support when something serious is going on — say that out loud.");
+
+add("Tips & tricks", `<div class="inner">
+  ${head("GROUNDED ANSWERS","Notebooks: Q&amp;A on your own documents")}
+  ${rows([
+    {e:"📚",t:"Upload the source.",b:"NotebookLM and friends: feed it the actual policy pack, handbook or report."},
+    {e:"🧾",t:"Answers with receipts.",b:"It answers only from those documents — with citations you can check."},
+    {e:"❓",t:"Ask the awkward stuff.",b:"“How much is maternity pay? How is accrued holiday calculated?”"},
+    {e:"🛡️",t:"The safety catch.",b:"Company documents go only into company-approved tools. No exceptions."}])}
+</div>`, "The hallucination antidote. Demo: HR policy pack, ask the questions people actually have, show the cited answers.");
+
+/* ---- Part 6 · Automation ---- */
+add("Automation", divider(6,"Beyond chat: automation","When a task repeats, stop doing it by hand."),
+ "MODULE GUIDE: second pillar. Post-lunch slot — open by collecting three 'most mind-numbing repeat task' answers before showing anything. Non-Microsoft rooms: concepts hold (Zapier/Make work the same way).");
+
+add("Automation", `<div class="inner">
+  ${head("THE BIG IDEA","What automation actually is")}
+  <div class="flow rv">
+    <div class="fnode"><span class="pill">WHEN</span><p>An invoice email arrives</p></div>
+    <div class="farrow">→</div>
+    <div class="fnode"><span class="pill dark">DO</span><p>Save the attachment to SharePoint</p></div>
+    <div class="farrow">→</div>
+    <div class="fnode"><span class="pill dark">THEN</span><p>Ping the Finance channel in Teams</p></div>
+  </div>
+  <p class="foot rv">You didn’t touch a thing.</p>
+  <p class="center rv" style="margin-top:14px"><span class="pill dark">IF “WHEN X HAPPENS, I ALWAYS DO Y” — THAT’S A FLOW WAITING TO BE BUILT</span></p>
+</div>`, "Every automation is a TRIGGER plus ACTIONS. Ask the room to hold their own X-and-Y in mind for the exercise.");
+
+add("Automation", `<div class="inner">
+  ${head("MEET POWER AUTOMATE","The robot you already own")}
+  ${cards([
+    {e:"📦",t:"Already included",b:"Part of Microsoft 365 for most organisations. Check — you probably own it."},
+    {e:"🖱️",t:"Point and click",b:"Build flows by picking triggers and actions from menus. Genuinely no code."},
+    {e:"🔌",t:"Connects your world",b:"Outlook, Teams, SharePoint, Forms, Excel, Planner — plus hundreds more."},
+    {e:"🌙",t:"Works while you sleep",b:"Flows run around the clock — filing, chasing and collating without you."}],2)}
+</div>`, "Most M365 orgs already own it and don't know. Features vary by licence tier; everything in this module is standard-tier territory.");
+
+add("Automation", `<div class="inner">
+  ${head("STARTER FLOWS","Six that people actually build first")}
+  ${cards([
+    {e:"📎",t:"The filer",b:"Email attachments saved straight to the right OneDrive or SharePoint folder."},
+    {e:"📝",t:"The collector",b:"New Forms response → a row in Excel → a ping in Teams. No copy-paste."},
+    {e:"✅",t:"The approver",b:"Documents approved with one click in Teams — no email chains."},
+    {e:"🔔",t:"The watchdog",b:"A Teams alert the moment a key file or list changes."},
+    {e:"☕",t:"The Monday digest",b:"A summary of open tasks and deadlines, in your inbox at 8am."},
+    {e:"📱",t:"The VIP filter",b:"A phone notification when that one important person emails."}])}
+</div>`, "Watch faces — someone lights up at ONE of these; that's their first automation. Ask: 'which one is your week?'");
+
+add("Automation", `<div class="inner">
+  ${head("PROOF","This is already normal")}
+  ${cards([
+    {e:"⚡",t:"50+ flows, 80+ rules",b:"One customer-service team’s quiet automation estate — built by the team, not by IT."},
+    {e:"✅",t:"Approvals, transformed",b:"Email-chain approvals became forms, lists and one-click sign-off in Teams."},
+    {e:"📱",t:"Data in the room",b:"A simple PowerApp lets account managers check allocations on their phone, mid-conversation."},
+    {e:"📧",t:"Don’t forget Outlook Rules",b:"The automation you’ve had for years — route, flag and file before you even look."}],2)}
+  <p class="foot rv">Ordinary teams. No coders. Hours back every week.</p>
+</div>`, "Real numbers from my workplace (CS & TPS teams) — swap for the client's industry when you can. The shape matters: ordinary team, no coders, big savings.");
+
+add("Automation", `<div class="inner">
+  ${head("NO BLANK CANVAS","Templates — and Copilot builds it for you")}
+  ${steps([
+    {t:"Search the task.",b:"“Approval”, “attachment”, “reminder” — plain words. Thousands of templates exist."},
+    {t:"Or just describe it.",b:"“Every Friday at 4pm, email me a summary of items added to the project tracker this week.” Copilot drafts the whole flow."},
+    {t:"Connect your accounts.",b:"Sign in to the services the flow touches. Two minutes."},
+    {t:"Rename, test, switch on.",b:"Send yourself a test email. Watch it work. Grin."}])}
+  <p class="foot rv">≈15 minutes to your first working flow — and the plain-English skill from Part 3 just became a building tool.</p>
+</div>`, "The two halves of the day fuse here: describe the flow in plain English, Copilot builds it, you review and switch on. If you demo one thing in this module, demo this.");
+
+add("Automation", `<div class="inner">
+  ${head("THE FILTER","Does your task pass? Tick what's true")}
+  <div class="checks">
+    <div class="check rv"><div class="box">✓</div><div><b>It happens weekly or more</b><br><span>Rarity isn’t worth automating. Rhythm is.</span></div></div>
+    <div class="check rv"><div class="box">✓</div><div><b>Same steps, every time</b><br><span>If you could write the recipe on a postcard, a flow can follow it.</span></div></div>
+    <div class="check rv"><div class="box">✓</div><div><b>It moves info between apps</b><br><span>Email → folder, form → spreadsheet, file → notification.</span></div></div>
+    <div class="check rv"><div class="box">✓</div><div><b>It needs no judgement</b><br><span>If it needs a decision, keep a human in the loop — that’s what approvals are for.</span></div></div>
+  </div>
+  <div id="autoBanner"><span class="pill dark" style="font-size:13px">FOUR TICKS? &nbsp;AUTOMATE IT TONIGHT. 🎉</span></div>
+</div>`, "Interactive moment #4 — pick an audience task and tick the boxes live as the room answers. Three ticks? Automate the mechanical part and keep a human approval step.");
+
+add("Automation", `<div class="inner">
+  ${head("WORKED EXAMPLE","One flow. One hour a week, back.")}
+  <div class="twocol">
+    <div class="panel rv"><h3 class="mut">The chore</h3><p style="font-size:14px">Chase team updates → paste into a report → email it out. Every Friday. 45–60 minutes.</p></div>
+    <div class="panel rv"><h3>The flow</h3><p style="font-size:14px">Forms asks the team Thursday → answers land in Excel → a drafted summary hits your inbox Friday 9am.</p></div>
+  </div>
+  <div class="flow rv" style="margin-top:22px">
+    <div class="fnode" style="width:180px;padding:14px"><p><b style="color:var(--teal)">1.</b> Forms asks</p></div><div class="farrow">→</div>
+    <div class="fnode" style="width:180px;padding:14px"><p><b style="color:var(--teal)">2.</b> Excel collects</p></div><div class="farrow">→</div>
+    <div class="fnode" style="width:180px;padding:14px"><p><b style="color:var(--teal)">3.</b> Summary drafted → you review &amp; send</p></div>
+  </div>
+  <p class="foot rv">Two minutes of judgement instead of an hour of legwork — the human stays where humans add value.</p>
+</div>`, "Adapt the story to the audience's industry — a school, a charity and a sales team each have their own version of this chore.");
+
+add("Automation", `<div class="inner">
+  ${head("EXERCISE 3","Find your first flow")}
+  ${steps([
+    {t:"List three rinse-and-repeat tasks.",b:"From your own week. The boring ones. Especially the boring ones."},
+    {t:"Run them through the filter.",b:"Weekly? Same steps? Moves info? No judgement needed?"},
+    {t:"Hunt the template.",b:"Search Power Automate’s gallery for your best candidate."},
+    {t:"Build the smallest one.",b:"Gentlest first build: a flow that simply posts a message in a Teams channel."}])}
+  <p class="foot rv"><span class="pill dark">≈ 15 MINUTES</span> &nbsp; No licence? Steps 1 and 2 are the valuable bit — the list comes with you.</p>
+</div>`, "Close by collecting flow ideas on a whiteboard — that list is gold for the org's champions/IT. Leadership rooms: swap for a 10-minute discussion.");
+
+/* ---- Part 7 · Safety ---- */
+add("Using AI well", divider(7,"Using AI well","Confidence comes with guardrails."),
+ "MODULE GUIDE: never cut this one. Two screens, no fearmongering. Reference the org's own AI policy by name if it exists; if not, that's a leadership action.");
+
+add("Using AI well", `<div class="inner">
+  ${head("GOLDEN RULES","Think before you paste")}
+  ${rows([
+    {e:"🛡️",t:"The paste-test.",b:"No customer data, personal details or confidential figures into free public tools."},
+    {e:"🏢",t:"Work account ≠ personal account.",b:"Copilot with your work login keeps data inside your organisation’s boundary. Free chatbots don’t."},
+    {e:"📜",t:"Know your policy.",b:"If your organisation has AI rules, follow them. If it doesn’t — that’s a leadership action from today."},
+    {e:"💬",t:"Unsure? Ask first.",b:"Thirty seconds of checking beats a data incident. Every time."}])}
+</div>`, "The key teaching: work account vs free consumer chatbot are different worlds. Normalise asking — it's a culture, not a rule.");
+
+add("Using AI well", `<div class="inner">
+  ${head("QUALITY CONTROL","You own the output")}
+  ${cards([
+    {e:"🔍",t:"Check the facts",b:"Names, numbers, dates and quotes — verified before they travel."},
+    {e:"⚖️",t:"Watch for bias",b:"Anything about people — hiring, reviews, assessments — gets extra scrutiny."},
+    {e:"🫆",t:"Keep your voice",b:"Edit until it sounds like you. Readers can tell — and they’re judging."},
+    {e:"✒️",t:"Stand behind it",b:"If your name’s on it, you should be able to defend every sentence."}],2)}
+  <p class="foot rv"><span class="pill dark">THE RULE, ONE MORE TIME: &nbsp;AI DRAFTS. YOU DECIDE.</span></p>
+</div>`, "Bookend to the hallucination screen — same motto, now as a leaving habit. Not a burden: just being good at your job with better tools.");
+
+/* ---- Part 8 · Beyond PowerPoint ---- */
+add("Beyond PowerPoint", divider(8,"One more thing…","About this “presentation”."),
+ "The meta module — the section this whole page exists to prove. Pause before advancing; let curiosity build.");
+
+add("Beyond PowerPoint", `<div class="inner">
+  ${head("PLOT TWIST","This was never PowerPoint")}
+  <p class="sub rv" style="color:var(--body);font-weight:400">You’ve spent the whole session inside a web page — a small, standalone app. That’s the point: presentations are quietly becoming <b style="color:var(--white)">software</b>.</p>
+  ${cards([
+    {e:"👆",t:"Interactive",b:"You tapped myths, built a prompt, ticked a filter, took a quiz. Try that in a static deck."},
+    {e:"🌍",t:"Runs anywhere",b:"Any browser, any device. No licences, no fonts to install, no “can everyone see my screen?”"},
+    {e:"🔗",t:"Explorable after",b:"Send the link. People revisit at their own pace — the talk keeps working after you leave."},
+    {e:"♻️",t:"Always current",b:"Update it once, and the link updates for everyone. No v7_FINAL_final.pptx."}],2)}
+</div>`, "The reveal. Scroll back a screen or two and point at the interactive moments they already used. This is what 'presentations beyond PowerPoint' means in practice.");
+
+add("Beyond PowerPoint", `<div class="inner">
+  ${head("STILL TRUE","The tools changed. The craft didn’t.")}
+  ${rows([
+    {e:"📖",t:"Story first.",b:"No tool rescues a talk without a spine: problem → journey → payoff."},
+    {e:"1️⃣",t:"One idea per screen.",b:"If a screen needs a paragraph, it’s two screens."},
+    {e:"🎬",t:"Show, don’t tell.",b:"A live demo or a 10-second interaction beats any bullet point."},
+    {e:"🙋",t:"Involve the room every ten minutes.",b:"A question, a vote, a hands-on moment. Attention is earned in cycles."},
+    {e:"🔁",t:"Rehearse the flow, not the words.",b:"Know your transitions cold; let the sentences stay alive."}])}
+</div>`, "Presentation skills segment: the fundamentals survive every format change. These five apply equally to a deck, a web app or a flipchart.");
+
+add("Beyond PowerPoint", `<div class="inner">
+  ${head("THE KICKER","You can build one of these")}
+  ${steps([
+    {t:"Describe the app.",b:"Audience, sections, brand colours, the feel you want — a four-part brief, just bigger."},
+    {t:"Let AI build it.",b:"This entire page — design, interactions, animations — was built by describing it in plain English."},
+    {t:"Iterate like any prompt.",b:"“Make the cards flip.” “Add a progress bar.” “Warmer teal.” Nudge until it’s yours."},
+    {t:"Host it free.",b:"GitHub Pages, one link, done. Present from a browser, on anything."}])}
+  <p class="foot rv">The deck version of this workshop exists too — same content, built the same way. That’s the point.</p>
+</div>`, "Full circle: the skill from Part 3 built the thing they're looking at. If they remember one thing from this module: you don't need to be a developer anymore.");
+
+/* ---- Part 9 · Stick ---- */
+add("Making it stick", divider(9,"Making it stick","Tools don’t change how you work. Habits do."),
+ "MODULE GUIDE: keep for all audiences. Staff rooms: longest on 'start small' + 30 days. Leadership: the people-project screen is the centrepiece.");
+
+add("Making it stick", `<div class="inner">
+  ${head("THE HONEST ADVICE","Start embarrassingly small")}
+  ${steps([
+    {t:"Pick ONE daily task.",b:"The first email of the day. The meeting notes. Just one."},
+    {t:"Do it with AI every time.",b:"For two weeks. No exceptions — that’s what makes it a habit."},
+    {t:"Let the habit prove the value.",b:"You’ll feel the time coming back. That feeling does the convincing."},
+    {t:"Then add the next task.",b:"One at a time. That’s how workflows actually change."}])}
+  <p class="foot rv">Small and consistent beats big and abandoned.</p>
+</div>`, "The failure mode: try to change everything Monday, abandon it by Friday. Say the closing line twice — it's the one they'll quote back.");
+
+add("Making it stick", `<div class="inner">
+  ${head("THE TAKE-HOME PLAN","Your first 30 days")}
+  <div class="tl">
+    <div class="card rv"><h3>Week 1</h3><p>One daily task, done with AI — using the four-part brief.</p></div>
+    <div class="card rv"><h3>Week 2</h3><p>Switch on Copilot in the one app you live in most.</p></div>
+    <div class="card rv"><h3>Week 3</h3><p>Build one flow from a Power Automate template.</p></div>
+    <div class="card rv"><h3>Week 4</h3><p>Show a colleague your best win. Teaching locks it in.</p></div>
+  </div>
+  <p class="foot rv">One move a week. By day 30, this isn’t new any more — it’s just how you work.</p>
+</div>`, "Suggest calendar reminders for each Monday. Natural moment to mention AI Alchemist follow-up support if it fits the room.");
+
+add("Making it stick", `<div class="inner">
+  ${head("STAY CURIOUS","How to keep up (without drowning)")}
+  ${cards([
+    {e:"🎧",t:"Follow the translators",b:"A few creators test everything so you don’t have to — starter list in the handout."},
+    {e:"📬",t:"Make it ambient",b:"One newsletter, one podcast on the commute. Ten minutes a week is plenty."},
+    {e:"🎓",t:"Use what work provides",b:"Your learning hub’s AI courses — and the internal AI communities. Join one."},
+    {e:"⏩",t:"The 2× habit",b:"Watch Teams recordings at double speed. Reclaim half of every missed meeting."}],2)}
+  <p class="foot rv">You don’t have to keep up with AI. Just keep up with a few good humans who do.</p>
+</div>`, "Starter list: Sabrina Ramonov, Nate B Jones, Riley Brown, Think with V, dailyprompter, brood.ai, theaisurfer, Hard Fork podcast. Internal example: MSD Learning — swap per audience.");
+
+add("Making it stick", `<div class="inner">
+  ${head("FOR THE LEADERS","Adoption is a people project, not an IT project")}
+  ${cards([
+    {e:"🚪",t:"Give permission",b:"Say out loud that experimenting is working — and give people time to do it."},
+    {e:"📣",t:"Celebrate wins",b:"“Sam saved four hours on reporting” beats any mandate you could issue."},
+    {e:"🤝",t:"Back your champions",b:"Every team has an enthusiast. Name them, support them, let them teach."},
+    {e:"📈",t:"Measure outcomes",b:"Hours back and faster responses — not logins. Usage stats aren’t adoption."}],2)}
+</div>`, "Say it: 'this one's for the leaders in the room.' If asked where to start: one team, one month, one champion — then scale what worked.");
+
+add("Making it stick", `<div class="inner">
+  ${head("ONE LAST PLAY","The spirit-animal sticker")}
+  ${steps([
+    {t:"Draw your work spirit animal.",b:"On paper. Badly. That’s the point."},
+    {t:"Brief the character designer.",b:"Use the prompt below — everything you learned today, in miniature."},
+    {t:"Generate and compare.",b:"Hold your drawing next to the AI’s sticker. Laugh accordingly."},
+    {t:"Reflect.",b:"What does it say about how you work — and what would you change?"}])}
+  <div class="chips"><div class="chip rv">“Act as a character designer. Turn my description into a die-cut sticker: name, tagline and image prompt — bold outlines, flat colours.”</div></div>
+</div>`, "Low-pressure closer that secretly laps the day's skills: precise describing, image generation, iteration. ~10 min. Cut for formal leadership rooms.");
+
+add("Making it stick", `<div class="inner center">
+  <h1 class="rv" style="font-size:clamp(26px,4.5vw,46px)">Every expert was once a beginner.</h1>
+  <div class="dots rv"><i></i><i></i><i></i></div>
+  ${cards([
+    {e:"🧰",t:"The tools are on your desk",b:"Copilot for tasks. GPTeal for thinking. Use each for the right job."},
+    {e:"💬",t:"The skill is asking well",b:"Who, what, why, how — then nudge. Good prompts, better results."},
+    {e:"⚡",t:"If it repeats, automate it",b:"And keep company data in company-approved tools. Always."}])}
+  <p class="foot rv">Thank you — now go turn something into gold.</p>
+  <p class="rv" style="margin-top:16px;font-size:12px;letter-spacing:2px;color:var(--muted);font-weight:600">AI ALCHEMIST · TURNING EVERYDAY TASKS INTO GOLD</p>
+</div>`, "Before they stand up: everyone writes down their ONE week-one task and tells their neighbour. Commitment made aloud survives the car park. ADD YOUR CONTACT DETAILS here before presenting.");
+
+/* ============ ENGINE ============ */
+const stage = document.getElementById('stage');
+S.forEach((s,i)=>{
+  const el = document.createElement('section');
+  el.className = 'screen'; el.dataset.i = i;
+  el.innerHTML = s.html.startsWith('<div class="inner')? s.html : `<div class="inner">${s.html}</div>`;
+  stage.appendChild(el);
+});
+const screens = [...document.querySelectorAll('.screen')];
+const secNames = [...new Set(S.map(s=>s.sec))];
+
+function reveals(el){ return [...el.querySelectorAll('.rv:not(.on)')]; }
+function show(i, dir=1){
+  i = Math.max(0, Math.min(S.length-1, i));
+  screens.forEach((el,j)=>{
+    el.classList.toggle('active', j===i);
+    el.classList.toggle('before', j<i);
+  });
+  cur = i;
+  location.hash = '#'+(i+1);
+  document.getElementById('prog').style.width = ((i+1)/S.length*100)+'%';
+  document.getElementById('counter').textContent = (i+1)+' / '+S.length;
+  document.getElementById('secLabel').textContent = 'Part '+(secNames.indexOf(S[i].sec))+' · '+S[i].sec;
+  if(secNames.indexOf(S[i].sec)===0) document.getElementById('secLabel').textContent = S[i].sec;
+  document.getElementById('notesBody').textContent = S[i].note || '—';
+  // animate counters
+  screens[i].querySelectorAll('[data-count]').forEach(n=>{
+    if(n.dataset.done) return; n.dataset.done=1;
+    const target=+n.dataset.count; let v=0;
+    const t=setInterval(()=>{ v+=Math.ceil(target/30); if(v>=target){v=target;clearInterval(t);} n.textContent=v+'%';},28);
+  });
+  // reveal first batch shortly after entering
+  setTimeout(()=>{ const r=reveals(screens[i]); if(r.length) r[0].classList.add('on'); },150);
+}
+function next(){
+  const r = reveals(screens[cur]);
+  if(r.length){ r[0].classList.add('on'); return; }
+  if(cur<S.length-1) show(cur+1,1);
+}
+function prev(){ if(cur>0){ screens[cur-1].querySelectorAll('.rv').forEach(e=>e.classList.add('on')); show(cur-1,-1);} }
+
+document.getElementById('navR').onclick=next;
+document.getElementById('navL').onclick=prev;
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();next();}
+  else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prev();}
+  else if(e.key==='Home'){show(0);} else if(e.key==='End'){show(S.length-1);}
+  else if(e.key==='g'||e.key==='G'||e.key==='Escape'){toggleOv();}
+  else if(e.key==='n'||e.key==='N'){document.getElementById('notes').classList.toggle('open');}
+});
+let tx=null;
+document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+document.addEventListener('touchend',e=>{
+  if(tx===null)return; const dx=e.changedTouches[0].clientX-tx;
+  if(Math.abs(dx)>60){ dx<0?next():prev(); } tx=null;
+},{passive:true});
+
+/* overview */
+const ov = document.getElementById('ov');
+function buildOv(){
+  const body=document.getElementById('ovBody'); body.innerHTML='';
+  secNames.forEach(name=>{
+    const d=document.createElement('div'); d.className='ovsec';
+    const idx0 = secNames.indexOf(name);
+    d.innerHTML=`<h4>${idx0===0?name:'Part '+idx0+' · '+name}</h4>`;
+    const btns=document.createElement('div'); btns.className='btns';
+    S.forEach((s,i)=>{ if(s.sec!==name) return;
+      const b=document.createElement('button');
+      const m=s.html.match(/<h2>(.*?)<\/h2>/)||s.html.match(/<h1[^>]*>(.*?)<\/h1>/);
+      b.textContent=(i+1)+' · '+(m?m[1].replace(/<[^>]*>/g,'').replace(/&amp;/g,'&').slice(0,42):'—');
+      if(i===cur)b.classList.add('here');
+      b.onclick=()=>{ toggleOv(); screens[i].querySelectorAll('.rv').forEach(e=>e.classList.add('on')); show(i); };
+      btns.appendChild(b);
+    });
+    d.appendChild(btns); body.appendChild(d);
+  });
+}
+function toggleOv(){ if(ov.classList.contains('open')){ov.classList.remove('open');} else {buildOv();ov.classList.add('open');} }
+document.getElementById('menuBtn').onclick=toggleOv;
+document.getElementById('ovClose').onclick=toggleOv;
+document.getElementById('gridBtn').onclick=()=>document.getElementById('notes').classList.toggle('open');
+
+/* widgets */
+document.addEventListener('click',e=>{
+  const flip=e.target.closest('.flip'); if(flip){flip.classList.toggle('done');return;}
+  const tabBtn=e.target.closest('[data-tabs] button');
+  if(tabBtn){
+    const wrap=tabBtn.closest('[data-tabs]');
+    const idx=[...wrap.children].indexOf(tabBtn);
+    [...wrap.children].forEach((b,j)=>b.classList.toggle('on',j===idx));
+    const panes=wrap.nextElementSibling.children;
+    [...panes].forEach((p,j)=>p.classList.toggle('on',j===idx));
+    [...panes].forEach(p=>p.querySelectorAll('.rv').forEach(el=>el.classList.add('on')));
+    return;
+  }
+  const pb=e.target.closest('[data-pb]');
+  if(pb && !pb.classList.contains('used')){
+    pb.classList.add('used');
+    const chip=document.getElementById('pbChip');
+    if(chip.dataset.started!=='1'){chip.textContent='';chip.style.color='';chip.dataset.started='1';}
+    chip.textContent=(chip.textContent+' '+pb.dataset.pb).trim();
+    const used=document.querySelectorAll('[data-pb].used').length;
+    document.getElementById('pbBar').style.width=(used*25)+'%';
+    document.getElementById('pbLabel').textContent='Result quality: '+['vague','usable','good','strong','sounds like you'][used];
+    return;
+  }
+  const cmp=e.target.closest('[data-cmp]');
+  if(cmp){
+    const on=cmp.dataset.cmp==='1';
+    [...cmp.parentElement.children].forEach(b=>b.classList.toggle('on',b===cmp));
+    document.getElementById('cmpChip').textContent = on
+      ? '“Act as a project manager. Draft a short, honest email to a client: delivery is 5 days late due to a supplier issue — now fixed, new date 18 July. Apologetic but confident. Under 120 words.”'
+      : '“Write an email about the delay.”';
+    const v=document.getElementById('cmpVerdict');
+    v.textContent = on ? 'Specific. Usable. Sounds like you on a good day.' : 'Generic. Stiff. Could be from anyone, about anything. You’ll rewrite most of it.';
+    v.style.color = on ? 'var(--teal)' : 'var(--muted)';
+    return;
+  }
+  const chk=e.target.closest('.check');
+  if(chk){
+    chk.classList.toggle('on');
+    const all=[...document.querySelectorAll('.check')].every(c=>c.classList.contains('on'));
+    document.getElementById('autoBanner').classList.toggle('lit',all);
+    return;
+  }
+  const q=e.target.closest('.qopt');
+  if(q){
+    document.querySelectorAll('.qopt').forEach(o=>o.classList.remove('pick-right','pick-wrong'));
+    const right=q.dataset.q==='ai';
+    q.classList.add(right?'pick-right':'pick-wrong');
+    const rv=document.getElementById('qReveal'); rv.classList.add('show');
+    rv.innerHTML = right
+      ? '<b style="color:var(--teal)">Spot on.</b> Email B has all the tells: the vocabulary, the padding, the bold-for-no-reason.'
+      : '<b style="color:#d49a9a">Nearly!</b> Email A is the human — typos, shorthand and one oddly specific supplier grudge. B is the AI.';
+    return;
+  }
+});
+
+/* deep links: react to manual hash edits too */
+window.addEventListener('hashchange',()=>{
+  const n=parseInt(location.hash.slice(1));
+  if(!isNaN(n) && n-1!==cur){ screens[n-1]?.querySelectorAll('.rv').forEach(e=>e.classList.add('on')); show(n-1); }
+});
+
+/* start */
+const h=parseInt((location.hash||'').slice(1));
+show(isNaN(h)?0:h-1);
+</script>
+</body>
+</html>
