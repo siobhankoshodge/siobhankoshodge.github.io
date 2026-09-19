@@ -75,6 +75,32 @@ footer{background:#111b30;border-top:1px solid #42516b;color:#c0ccd9}
 @media(prefers-reduced-motion:reduce){.btn,.project-card{transition:none}.btn:hover,#projects .project-card:hover{transform:none}}
 
 .woodland .forest-photo{aspect-ratio:4/5;height:auto;object-fit:cover;object-position:48% center}.photo-credit{display:block;margin-top:8px;font-family:'DM Sans',sans-serif;font-size:.68rem;font-style:normal;color:var(--muted)}.photo-credit a{color:var(--muted)}.hero .btn-primary{box-shadow:0 8px 24px #ff6b6b18}a:focus-visible,summary:focus-visible{outline-color:#FF6B6B}
+
+/* Full-site forest photograph, protected by a translucent brand-navy layer. */
+body{position:relative;isolation:isolate;background:#1A2744;color:#fff}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,rgba(26,39,68,.88),rgba(26,39,68,.70)),url("https://images.pexels.com/photos/14013575/pexels-photo-14013575.jpeg?auto=compress&cs=tinysrgb&w=2000") center center/cover no-repeat}
+nav{background:rgba(26,39,68,.55)}
+.hero{background:transparent}
+.hero .wrap{display:block;padding-top:100px;padding-bottom:96px}
+.hero-content{max-width:850px}.hero h1{max-width:850px;font-size:clamp(2.75rem,6vw,5rem)}
+.hero-copy{max-width:680px}.hero .small{max-width:620px}.principles{max-width:740px}
+.hero+section.alt,#help,#about,#projects,section.alt:has(.faq),#contact,#social{background:rgba(26,39,68,.24);color:#fff;--ink:#fff;--muted:#d2dbe6;--line:#ffffff30;--light-teal:#9ad9cf;--card:rgba(26,39,68,.62)}
+.hero+section.alt,#about,section.alt:has(.faq){background:rgba(17,27,48,.48)}
+.hero+section .eyebrow,.hero+section .card .eyebrow,#help .eyebrow,#projects .eyebrow,.faq .eyebrow{color:#9ad9cf}
+.hero+section .section-sub,.hero+section .card p,#about .about-text p{color:#d2dbe6}
+.hero+section .grid,.hero+section .card,#help .experiment-links{border-color:#ffffff30}
+#help .steps{background:rgba(26,39,68,.65);border:1px solid #ffffff24}
+#help .btn-primary{background:#FF6B6B;color:#1A2744;border-color:#FF6B6B}#help .btn-primary:hover{background:#ff9494}
+#projects .project-card,#projects .project-card:nth-child(2),#projects .project-card:nth-child(3){background:rgba(26,39,68,.66);border-color:#4ba09877;color:#fff}
+#projects .project-card:hover{background:rgba(26,39,68,.85)}
+#projects .project-link,#projects .experiment-links a,#help .experiment-links a{color:#9ad9cf}
+.faq{--muted:#d2dbe6;--line:#ffffff30}.faq h2{color:#fff}
+.contact-box{background:rgba(26,39,68,.57)}.message-example{background:rgba(17,27,48,.58)}
+.social-card{background:rgba(26,39,68,.5)}footer{background:rgba(17,27,48,.68)}
+footer .photo-credit{margin-top:10px}
+@media(max-width:850px){.hero .wrap{padding-top:70px;padding-bottom:70px}.hero-content{max-width:100%}}
+@media(max-width:480px){.hero .wrap{padding:54px 24px 64px}body::before{background-position:58% center}}
+
 </style>
 </head>
 <body>
@@ -91,7 +117,7 @@ footer{background:#111b30;border-top:1px solid #42516b;color:#c0ccd9}
 <p class="hero-copy">I’m Siobhan. I help curious people turn “I wonder if AI could…” into something they can actually use. Through clear explanations, hands-on experiments and real examples, you’ll learn how to fit AI into your work—and discover possibilities you hadn’t considered.</p>
 <div class="actions"><a class="btn btn-primary" href="#projects">Explore what you could do with AI</a><a class="btn btn-secondary" href="#help">Learn with me</a></div>
 <p class="small">You don’t need a technical background. Bring an idea, a frustrating task or simply your curiosity.</p>
-<div class="principles"><span>Space to experiment</span><span>Plain-English guidance</span><span>Your tools, your pace</span></div></div><figure class="woodland"><img class="forest-photo" src="https://images.pexels.com/photos/14013575/pexels-photo-14013575.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" srcset="https://images.pexels.com/photos/14013575/pexels-photo-14013575.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=600 600w, https://images.pexels.com/photos/14013575/pexels-photo-14013575.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200 1200w" sizes="(max-width: 850px) 90vw, 45vw" width="1200" height="900" alt="Dappled sunlight streams through a lush green forest canopy." fetchpriority="high" decoding="async"><figcaption>A little space for possibility.<small class="photo-credit">Forest photograph from <a href="https://www.pexels.com/search/forest%20sunlight/" target="_blank" rel="noopener">Pexels</a> · <a href="https://www.pexels.com/license/" target="_blank" rel="noopener">Free stock licence</a></small></figcaption></figure>
+<div class="principles"><span>Space to experiment</span><span>Plain-English guidance</span><span>Your tools, your pace</span></div></div>
 </div></section>
 <section class="alt" aria-labelledby="possibilities-title"><div class="wrap">
 <span class="eyebrow">Create · Improve · Grow</span><h2 id="possibilities-title">Put your curiosity to work.</h2>
@@ -179,6 +205,6 @@ footer{background:#111b30;border-top:1px solid #42516b;color:#c0ccd9}
     </div>
   </section>
 </main>
-<footer><p>AI Alchemist · Curiosity, creativity and confidence · Built with curiosity by Siobhan</p></footer>
+<footer><p>AI Alchemist · Curiosity, creativity and confidence · Built with curiosity by Siobhan</p><p class="photo-credit">Forest photograph from <a href="https://www.pexels.com/search/forest%20sunlight/" target="_blank" rel="noopener">Pexels</a> · <a href="https://www.pexels.com/license/" target="_blank" rel="noopener">Free stock licence</a></p></footer>
 </body>
 </html>
