@@ -130,13 +130,27 @@ footer .photo-credit{margin-top:10px}
 
 /* Two learning resources, with a single column on smaller screens. */
 @media(min-width:851px){#projects .grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Practical downloadable toolkits, using the existing forest and brand palette. */
+#toolkits{background:rgba(17,27,48,.48);border-block:1px solid #ffffff25}
+#toolkits .section-sub{color:#d2dbe6}
+.toolkit-card{display:flex;flex-direction:column;background:rgba(26,39,68,.78);border-color:#4ba09877;border-radius:10px 10px 34px 10px}
+.toolkit-card .eyebrow{color:#9ad9cf;margin-bottom:16px}
+.toolkit-card h3{font-size:1.45rem}
+.toolkit-card p{color:#d2dbe6}
+.toolkit-card .toolkit-details{font-size:.9rem;margin-top:18px}
+.toolkit-card .toolkit-buy{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:auto;padding-top:28px}
+.toolkit-price{font-size:1.5rem;font-weight:600;color:#fff}
+#toolkits .toolkit-footer{margin-top:30px}
+#toolkits .toolkit-footer .small{margin-top:16px;margin-bottom:0}
+.nav-links .nav-shop{color:#9ad9cf;font-weight:700}
 </style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <nav aria-label="Main navigation"><div class="nav-inner">
 <a class="nav-brand" href="#main">AI ALCHEMIST</a>
-<ul class="nav-links"><li><a href="#help">Team workshops</a></li><li><a href="#ai-start">Find your starting point</a></li><li><a href="#about">Meet Siobhan</a></li><li><a href="#projects">Explore &amp; learn</a></li><li><a href="#contact">Get in touch</a></li></ul>
+<ul class="nav-links"><li><a class="nav-shop" href="https://payhip.com/THEAIALCHEMIST">Shop Toolkits</a></li><li><a href="#help">Team workshops</a></li><li><a href="#ai-start">Find your starting point</a></li><li><a href="#about">Meet Siobhan</a></li><li><a href="#projects">Explore &amp; learn</a></li><li><a href="#contact">Get in touch</a></li></ul>
 </div></nav>
 <main id="main">
 <section class="hero" aria-labelledby="hero-title"><div class="wrap">
@@ -144,9 +158,40 @@ footer .photo-credit{margin-top:10px}
 <h1 id="hero-title">AI excellence starts<br> <span>with your people.</span></h1>
 <p class="hero-copy">Help your team understand AI, explore ideas and build better ways of working. Practical workshops shaped around your people, your tools and your everyday challenges.</p>
 <p class="hero-copy">I’m Siobhan. I believe the people who know your business are well placed to improve it. Through clear explanations, hands-on experiments and building together, I help your team turn “I wonder if AI could…” into practical improvements they understand and can develop themselves.</p>
-<div class="actions"><a class="btn btn-primary" href="https://wa.me/447309596154?text=Hi%20Siobhan%2C%20I%E2%80%99d%20like%20to%20discuss%20an%20AI%20workshop%20for%20my%20team.%0ABusiness/location%3A%20%0AApproximate%20group%20size%3A%20%0AA%20task%20we%E2%80%99d%20like%20help%20with%3A%20%0ATools%20we%20use%3A%20%0APreferred%20evening%20or%20weekend%3A%20" target="_blank" rel="noopener">Discuss a workshop ↗</a><a class="btn btn-secondary" href="#ai-start">Find your starting point</a></div>
+<div class="actions"><a class="btn btn-primary" href="https://wa.me/447309596154?text=Hi%20Siobhan%2C%20I%E2%80%99d%20like%20to%20discuss%20an%20AI%20workshop%20for%20my%20team.%0ABusiness/location%3A%20%0AApproximate%20group%20size%3A%20%0AA%20task%20we%E2%80%99d%20like%20help%20with%3A%20%0ATools%20we%20use%3A%20%0APreferred%20evening%20or%20weekend%3A%20" target="_blank" rel="noopener">Discuss a workshop ↗</a><a class="btn btn-secondary" href="#ai-start">Find your starting point</a><a class="btn btn-secondary" href="https://payhip.com/THEAIALCHEMIST">Shop Toolkits →</a></div>
 <p class="small">In person in Leighton Buzzard, Milton Keynes and Luton · Evenings and weekends by arrangement.</p>
 <div class="principles"><span>Space to experiment</span><span>Plain-English guidance</span><span>Your tools, your pace</span></div></div>
+</div></section>
+
+<section id="toolkits" aria-labelledby="toolkits-title"><div class="wrap">
+<span class="eyebrow">Learn together · Put it into practice</span>
+<h2 id="toolkits-title">Practical AI toolkits for small teams.</h2>
+<p class="section-sub">Start with an everyday task and build confidence using the AI tools available to you. These downloadable prompt packs and workbooks help your team bring its own knowledge, practise together and check the results.</p>
+<div class="grid">
+<article class="card toolkit-card">
+<span class="eyebrow">Clothing retailers</span>
+<h3>Customer care with confidence.</h3>
+<p>Help your team respond to size and fit questions, faulty items, delivery delays and returns, with thoughtful replies shaped around your shop.</p>
+<p class="toolkit-details">Five practical prompts · Worked examples · Workbook</p>
+<div class="toolkit-buy"><span class="toolkit-price">£12</span><a class="btn btn-primary" href="https://payhip.com/b/T3QG5" aria-label="View the clothing retailer pack on Payhip">View clothing pack →</a></div>
+</article>
+<article class="card toolkit-card">
+<span class="eyebrow">Gift shops</span>
+<h3>Make every occasion matter.</h3>
+<p>Guide gift choices, confirm personalisation and handle occasion deadlines or damaged gifts with clear, caring communication.</p>
+<p class="toolkit-details">Five practical prompts · Worked examples · Workbook</p>
+<div class="toolkit-buy"><span class="toolkit-price">£12</span><a class="btn btn-primary" href="https://payhip.com/b/pQixy" aria-label="View the gift shop pack on Payhip">View gift shop pack →</a></div>
+</article>
+<article class="card toolkit-card">
+<span class="eyebrow">Estate agents</span>
+<h3>Keep enquiries moving.</h3>
+<p>Draft first replies, viewing messages and seller updates, then explore simple inbox organisation with the Outlook and Microsoft 365 guide.</p>
+<p class="toolkit-details">Five practical prompts · Workbook · Outlook inbox guide</p>
+<div class="toolkit-buy"><span class="toolkit-price">£12</span><a class="btn btn-primary" href="https://payhip.com/b/dy4FV" aria-label="View the estate agent pack on Payhip">View estate agent pack →</a></div>
+</article>
+</div>
+<div class="toolkit-footer"><a class="btn btn-secondary" href="https://payhip.com/THEAIALCHEMIST">Shop all toolkits →</a>
+<p class="small">One-off purchases. Payment and digital downloads are handled by Payhip. These are training resources for your team to adapt and review; AI subscriptions and personal training are not included.</p></div>
 </div></section>
 <section id="help" aria-labelledby="offer-title"><div class="wrap">
 <span class="eyebrow">Local learning · Practical confidence</span>
